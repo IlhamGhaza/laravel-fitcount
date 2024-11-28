@@ -36,10 +36,13 @@
     </div>
 
     <!-- User Avatar -->
-    <a href="{{ route('account') }}" style="text-decoration: none;">
-        <div class="Ellipse1"
-            style="width: 48px; height: 48px; position: absolute; right: 5%; top: 15px; background: #385723; border-radius: 9999px; cursor: pointer;">
-        </div>
+   <a href="{{ route('check.auth') }}" style="text-decoration: none;">
+    <div class="Ellipse1"
+        style="width: 48px; height: 48px; position: absolute; right: 5%; top: 15px; background: #385723; border-radius: 9999px; cursor: pointer;">
+        @auth
+        <img src="{{ Auth::user()->profile_photo_url }}" alt="Profile" class="w-full h-full rounded-full object-cover">
+        @endauth
+    </div>
     </a>
 
     <!-- Mobile Hamburger Icon -->

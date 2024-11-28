@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthCheckController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,7 +19,9 @@ Route::get('/komunitas', function () {
     return view('komunitas');
 })->name('komunitas');
 
-//account
-Route::get('/account', function () {
-    return view('account');
-})->name('account');
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware(['auth'])->name('profile');
+
+Route::get('/check-auth', [AuthCheckController::class, 'checkAuth'])->name('check.auth');
+
