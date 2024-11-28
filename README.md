@@ -9,21 +9,18 @@
   - [Table of Contents](#table-of-contents)
   - [Tech Stack](#tech-stack)
   - [Installation](#installation)
+  - [Development](#development)
   - [Contributing](#contributing)
   - [License](#license)
   - [Contact](#contact)
 
-<!-- - **Face Recognition**: Users can clock in and out using face recognition technology.
-- **Geolocation**: Ensures that attendance is recorded only when users are at the specified location.
-- **Absence Management**: Users can provide reasons and evidence for absences.
-- **User-Friendly Interface**: Built with Filament to provide a clean and intuitive admin panel. -->
-
 ## Tech Stack
 
 - **Laravel 11.x**: The PHP framework used to build the application.
-<!-- - **Filament 3**: Used for the admin interface and resource management.
-- **MySQL 8.0**: The database system used to store all records.
-- **Sanctum**: For API authentication. -->
+- **Vite**: Frontend build tool
+- **TailwindCSS**: Utility-first CSS framework
+<!-- - **SQLite**: Default database for quick setup -->
+- **MySQL 8.0**: Database for production
 
 ## Installation
 
@@ -41,12 +38,11 @@
    cd laravel-fitcount
    ```
 
-   or download the zip file and extract it.
-
 2. **Install dependencies**:
 
    ```bash
    composer install
+   npm install
    ```
 
 3. **Copy the `.env.example` file to `.env`**:
@@ -62,43 +58,42 @@
    ```
 
 5. **Set up your database**:
-
-   - Update the `.env` file with your database credentials.
+   - Update the `.env` file with your database credentials
    - Run migrations and seeders:
   
      ```bash
      php artisan migrate --seed
      ```
 
-6. **Serve the application**:
+## Development
 
-   ```bash
-   php artisan serve
-   ```
+Start all development servers with a single command:
 
-<!-- ## Usage
+```bash
+composer dev
+```
 
-- **Admin Panel**: Manage shifts, schedules, and attendance records via the Filament interface.
-- **Attendance Tracking**: Users can log in via face recognition and geolocation. -->
-<!-- 
-## API
+This command runs:
+- Laravel development server
+- Queue listener for background jobs
+- Real-time log viewer
+- Vite development server for frontend assets
 
-This project includes an API built with Laravel Sanctum and Orion for handling CRUD operations. -->
+Each process runs in parallel with color-coded output for easy monitoring.
 
 ## Contributing
 
 Contributions are welcome! Please follow the standard GitHub flow:
 
-1. Fork the repository.
-2. Create a new branch.
-3. Make your changes.
-4. Submit a pull request.
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 
 ## Contact
 
