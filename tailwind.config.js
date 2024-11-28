@@ -12,8 +12,11 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            'poppins': ['Poppins', 'sans-serif'],
             },
+            backgroundImage: {
+                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            }
         },
     },
     plugins: [],
