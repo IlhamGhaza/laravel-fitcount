@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - FitCount</title>
+    <title>Reset Password - FitCount</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -26,52 +26,57 @@
                 </div>
             </div>
 
-            <!-- Login Content -->
+            <!-- Reset Password Content -->
             <div class="relative z-10 flex flex-col items-center pt-[139px]">
                 <h1 class="text-[48px] font-bold text-white font-poppins text-center max-w-[638px]">
-                    Selamat Datang Dikomunitas FitCount
+                    Reset Kata Sandi
                 </h1>
 
                 <p class="mt-[15px] text-[20px] font-medium text-white font-poppins">
-                    silahkan Login ke Akun Anda
+                    Masukkan kata sandi baru Anda
                 </p>
 
-                <!-- Login Form -->
+                <!-- Reset Password Form -->
                 <form class="mt-[39px] w-[463px]">
                     <div class="relative mb-6">
                         <div class="relative">
                             <input type="email"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                                placeholder="Email">
+                                placeholder="Email" value="{{ request()->email }}" readonly>
                             <!-- Mail Icon -->
                             <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                                <!-- Add your mail icon SVG here -->
+                                <!-- Add mail icon SVG here -->
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="relative mb-6">
+                        <input type="password"
+                            class="w-full h-[65px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
+                            placeholder="Kata Sandi Baru">
+                        <!-- Lock Icon -->
+                        <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
+                            <!-- Add lock icon SVG here -->
                         </div>
                     </div>
 
                     <div class="relative">
                         <input type="password"
                             class="w-full h-[65px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                            placeholder="Kata Sandi">
+                            placeholder="Konfirmasi Kata Sandi Baru">
                         <!-- Lock Icon -->
                         <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                            <!-- Add your lock icon SVG here -->
+                            <!-- Add lock icon SVG here -->
                         </div>
-                    </div>
-
-                    <div class="text-right mt-2">
-                        <a href="{{ route('password.request') }}" class="text-[11px] font-bold text-white">Lupa Kata
-                            Sandi?</a>
                     </div>
 
                     <button type="submit"
                         class="mt-[30px] w-[238px] h-[44px] mx-auto block bg-[#BBE67A] rounded-[30px]">
-                        <span class="text-[20px] font-medium text-[#385723] font-poppins">Masuk</span>
+                        <span class="text-[20px] font-medium text-[#385723] font-poppins">Reset Kata Sandi</span>
                     </button>
 
                     <p class="text-center mt-[9px] text-[13px] text-white font-poppins">
-                        Tidak punya akun? <a href="{{ route('register') }}" class="font-bold">Daftar</a>
+                        Kembali ke <a href="{{ route('login') }}" class="font-bold">Halaman Login</a>
                     </p>
                 </form>
             </div>
