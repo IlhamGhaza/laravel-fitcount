@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('password');
             //image
             $table->string('avatar')->nullable();
+            $table->integer('age')->nullable();
+            $table->decimal('height', 5, 2)->nullable();
+            $table->decimal('weight', 5, 2)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
