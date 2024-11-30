@@ -107,7 +107,8 @@
                     <div class="px-4 mx-auto max-w-7xl">
                         <div class="flex items-center justify-between">
                             <h2 class="text-4xl font-bold">To do list</h2>
-                            <a href="#" class="text-[#385723] text-xl font-semibold">Lihat Semua ></a>
+                            <a href="{{ route('todo') }}" class="text-[#385723] text-xl font-semibold">Lihat Semua>
+                            </a>
                         </div>
                     </div>
                 </div>
