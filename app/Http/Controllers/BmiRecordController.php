@@ -8,6 +8,26 @@ use Illuminate\Support\Facades\Auth;
 
 class BmiRecordController extends Controller
 {
+    // Method untuk menampilkan form BMI
+    public function showForm()
+    {
+        $user = Auth::user(); // Ambil data user yang sedang login
+        $userData = null;
+
+        // Jika pengguna sudah login, ambil data dari database
+        if ($user) {
+            $userData = [
+                'gender' => $user->gender,
+                'age' => $user->age,
+                'height' => $user->height,
+                'weight' => $user->weight,
+            ];
+        }
+
+        // Kirim data user ke view untuk mengisi form secara otomatis
+        return view('home', compact('userData'));
+    }
+
     // Method untuk menghitung BMI
     public function calculate(Request $request)
     {
@@ -15,10 +35,12 @@ class BmiRecordController extends Controller
         $request->validate([
             'weight' => 'required|numeric|min:1',
             'height' => 'required|numeric|min:1',
+            'age' => 'required|numeric|min:1',
+            'gender' => 'required|string',
         ]);
 
         // Hitung BMI
-        $heightInMeters = $request->height / 100;  // Convert cm ke meter
+        $heightInMeters = $request->height / 100; // Convert cm ke meter
         $bmiScore = $request->weight / ($heightInMeters * $heightInMeters);
 
         // Tentukan kategori BMI berdasarkan skor

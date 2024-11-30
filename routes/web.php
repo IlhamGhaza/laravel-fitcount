@@ -10,12 +10,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
 Route::get('/hitung', function () {
-    return redirect('hitung')->fragment('hitung.section');
+    return redirect('home.bmi.section');
 })->name('hitung');
+
 Route::get('/tentang', function () {
-    return redirect('tentang')->fragment('tentang.section');
+    return redirect('home.tentang.section');
 })->name('tentang');
+
+
 
 //result
 Route::get('/result-bmi', function () {
@@ -26,10 +30,9 @@ Route::get('/komunitas', function () {
 })->name('komunitas');
 
 //bmi route
-Route::get('/bmi', function () {
-    return view('bmi');
-})->name('bmi.form');
-Route::post('/bmi/calculate', [BmiRecordController::class, 'calculate'])->name('bmi.calculate');
+Route::get('/bmi', [BmiRecordController::class, 'showForm'])->name('bmi.form'); // Menggunakan metode showForm untuk memuat form dengan data pengguna
+Route::post('/bmi/calculate', [BmiRecordController::class, 'calculate'])->name('bmi.calculate'); // Tetap seperti sebelumnya
+
 // check auth status
 Route::get('/check-auth', [AuthCheckController::class, 'checkAuth'])->name('check.auth');
 Route::get('/check-auth2', [AuthCheckController::class, 'checkAuth2'])->name('check.auth2');
