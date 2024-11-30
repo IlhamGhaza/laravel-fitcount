@@ -66,6 +66,7 @@
                     </div>
 
                     <button type="submit"
+                     {{-- formaction="{{ route('login') }}" --}}
                         class="mt-[30px] w-[238px] h-[44px] mx-auto block bg-[#BBE67A] rounded-[30px]">
                         <span class="text-[20px] font-medium text-[#385723] font-poppins">Masuk</span>
                     </button>

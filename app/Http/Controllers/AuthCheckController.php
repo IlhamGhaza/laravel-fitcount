@@ -13,4 +13,11 @@ class AuthCheckController extends Controller
             ? redirect()->route('profile')
             : redirect()->route('login');
     }
+
+    public function checkAuth2()
+    {
+        return Auth::check()
+            ? redirect()->route('profile')
+            : redirect()->route('login');
+    }
 }
