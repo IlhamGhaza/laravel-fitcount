@@ -48,7 +48,7 @@
             </div>
         </div> --}}
         <div class="Frame29" style="width: 249px; height: 91px; left: 97px; top: 413px; position: absolute">
-            <a href="{{route('check.auth2') }}">
+            <a href="{{route('check.auth1') }}">
                 <div class="Rectangle221"
                     style="width: 249px; height: 60px; left: 0px; top: 15px; position: absolute; border-radius: 100px; border: 3px white solid">
                 </div>

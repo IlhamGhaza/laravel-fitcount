@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthCheckController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BmiRecordController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,11 @@ Route::get('/komunitas', function () {
     return view('komunitas');
 })->name('komunitas');
 
+//bmi route
+Route::get('/bmi', function () {
+    return view('bmi');
+})->name('bmi.form');
+Route::post('/bmi/calculate', [BmiRecordController::class, 'calculate'])->name('bmi.calculate');
 // check auth status
 Route::get('/check-auth', [AuthCheckController::class, 'checkAuth'])->name('check.auth');
 Route::get('/check-auth2', [AuthCheckController::class, 'checkAuth2'])->name('check.auth2');
@@ -50,12 +57,25 @@ Route::middleware(['auth'])->group(function () {
     })->name('account');
     // logout
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
     // edit profile
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/profile/update', [UserController::class, 'update'])->name('users.update');
-    //route todo
+
+    //Todolist route
     Route::get('/profile/todo', function () {
         return view('user.todo');
     })->name('todo');
-    // Route::post('/profile/todo', [UserController::class, 'storeTodo'])->name('todo.store');
+
+    Route::get('/todo', [TaskController::class, 'show'])->name('todo.show');
+    // create task
+    Route::get('/todo/create', [TaskController::class, 'create'])->name('todo.create');
+    Route::post('/todo', [TaskController::class, 'store'])->name('todo.store');
+
+    // Update status task
+    Route::post('/todo/{task}/update-status', [TaskController::class, 'updateStatus'])->name('todo.updateStatus');
+
+    // create task progress pada tugas
+    Route::post('/todo/{task}/add-progress', [TaskController::class, 'addProgress'])->name('todo.addProgress');
+
 });
