@@ -21,6 +21,7 @@
     <div class="min-h-screen bg-white">
         <!-- Profile Section -->
         <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="bg-[#385723] rounded-[50px] shadow-lg p-8">
                 <div class="flex items-center gap-8">
                     <div class="w-[183px] h-[183px]">
@@ -37,14 +38,14 @@
                         <!-- Action Buttons -->
                         <div class="flex gap-4 mt-4">
                             <a href="{{ route('users.edit') }}"
-                                class="inline-flex items-center px-4 py-2 bg-[#BBE67A] rounded-[30px] font-medium text-[#385723] hover:bg-[#a5cc69] transition-colors">
+                               class="inline-flex items-center px-4 py-2 bg-[#BBE67A] rounded-[30px] font-medium text-[#385723] hover:bg-[#a5cc69] transition-colors">
                                 <span class="text-lg">Edit Profile</span>
                             </a>
 
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
                                 <button type="submit"
-                                    class="px-4 py-2 bg-red-500 text-white rounded-[30px] font-medium hover:bg-red-600 transition-colors">
+                                        class="px-4 py-2 bg-red-500 text-white rounded-[30px] font-medium hover:bg-red-600 transition-colors">
                                     <span class="text-lg">Logout</span>
                                 </button>
                             </form>
