@@ -23,20 +23,6 @@
 
 <body>
     <x-header />
-    {{-- logout --}}
-    @if (session('logout'))
-        <div id="logout-message" class="fixed z-50 top-4 right-4">
-            <div class="bg-[#BBE67A] text-[#385723] px-6 py-3 rounded-[30px] shadow-lg">
-                <span class="text-lg font-medium">{{ session('logout') }}</span>
-            </div>
-        </div>
-
-        <script>
-            setTimeout(function() {
-                document.getElementById('logout-message').style.display = 'none';
-            }, 3000);
-        </script>
-    @endif
 
     {{-- status success --}}
     @if (session('success'))

@@ -9,17 +9,19 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 Route::get('/hitung', function () {
-    return redirect('hitung') ->fragment('hitung.section');
+    return redirect('hitung')->fragment('hitung.section');
 })->name('hitung');
 Route::get('/tentang', function () {
-    return redirect('tentang') ->fragment('tentang.section');
+    return redirect('tentang')->fragment('tentang.section');
 })->name('tentang');
+
+//result
+Route::get('/result-bmi', function () {
+    return view('result');
+})->name('result');
 Route::get('/komunitas', function () {
     return view('komunitas');
 })->name('komunitas');
-Route::get('/profile', function () {
-    return view('profile');
-})->middleware(['auth'])->name('profile');
 
 // check auth status
 Route::get('/check-auth', [AuthCheckController::class, 'checkAuth'])->name('check.auth');
@@ -51,4 +53,9 @@ Route::middleware(['auth'])->group(function () {
     // edit profile
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/profile/update', [UserController::class, 'update'])->name('users.update');
+    //route todo
+    Route::get('/profile/todo', function () {
+        return view('todo');
+    })->name('todo');
+    // Route::post('/profile/todo', [UserController::class, 'storeTodo'])->name('todo.store');
 });
