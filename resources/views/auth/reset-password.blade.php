@@ -21,7 +21,7 @@
         <div class="relative w-full h-[776px]">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0">
-                <img src="{{ asset('images/image1.svg') }}" class="w-full h-full object-cover" alt="Background">
+                <img src="{{ asset('images/image1.svg') }}" class="object-cover w-full h-full" alt="Background">
                 <div class="absolute inset-0 bg-gradient-radial from-[rgba(20,33,11,0.81)] to-[rgba(15,23,9,0.81)]">
                 </div>
             </div>
@@ -36,40 +36,46 @@
                     Masukkan kata sandi baru Anda
                 </p>
 
+                <!-- Display Validation Errors -->
+                @if ($errors->any())
+                    <div class="bg-red-600 text-white p-4 mb-4 rounded-lg w-full max-w-[463px]">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <!-- Reset Password Form -->
-                <form class="mt-[39px] w-[463px]">
+                <form method="POST" action="{{ route('password.update') }}" class="mt-[39px] w-[463px]">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ request()->route('token') }}">
+
+                    <!-- Email Field (Read-only) -->
                     <div class="relative mb-6">
                         <div class="relative">
-                            <input type="email"
+                            <input type="email" name="email" value="{{ request()->email }}"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                                placeholder="Email" value="{{ request()->email }}" readonly>
-                            <!-- Mail Icon -->
-                            <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                                <!-- Add mail icon SVG here -->
-                            </div>
+                                placeholder="Email" readonly>
                         </div>
                     </div>
 
+                    <!-- Password Field -->
                     <div class="relative mb-6">
-                        <input type="password"
+                        <input type="password" name="password"
                             class="w-full h-[65px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                            placeholder="Kata Sandi Baru">
-                        <!-- Lock Icon -->
-                        <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                            <!-- Add lock icon SVG here -->
-                        </div>
+                            placeholder="Kata Sandi Baru" required>
                     </div>
 
-                    <div class="relative">
-                        <input type="password"
+                    <!-- Confirm Password Field -->
+                    <div class="relative mb-6">
+                        <input type="password" name="password_confirmation"
                             class="w-full h-[65px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                            placeholder="Konfirmasi Kata Sandi Baru">
-                        <!-- Lock Icon -->
-                        <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                            <!-- Add lock icon SVG here -->
-                        </div>
+                            placeholder="Konfirmasi Kata Sandi Baru" required>
                     </div>
 
+                    <!-- Submit Button -->
                     <button type="submit"
                         class="mt-[30px] w-[238px] h-[44px] mx-auto block bg-[#BBE67A] rounded-[30px]">
                         <span class="text-[20px] font-medium text-[#385723] font-poppins">Reset Kata Sandi</span>

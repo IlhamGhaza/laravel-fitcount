@@ -21,7 +21,7 @@
         <div class="relative w-full h-[776px]">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0">
-                <img src="{{ asset('images/image1.svg') }}" class="w-full h-full object-cover" alt="Background">
+                <img src="{{ asset('images/image1.svg') }}" class="object-cover w-full h-full" alt="Background">
                 <div class="absolute inset-0 bg-gradient-radial from-[rgba(20,33,11,0.81)] to-[rgba(15,23,9,0.81)]">
                 </div>
             </div>
@@ -36,22 +36,45 @@
                     Masukkan email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda
                 </p>
 
+                <!-- Display Validation Errors -->
+                @if ($errors->any())
+                    <div class="bg-red-600 text-white p-4 mb-4 rounded-lg w-full max-w-[463px]">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <!-- Success Message -->
+                @if (session('status'))
+                    <div class="bg-green-600 text-white p-4 mb-4 rounded-lg w-full max-w-[463px]">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
                 <!-- Forgot Password Form -->
-                <form class="mt-[39px] w-[463px]">
+                <form method="POST" action="{{ route('password.email') }}" class="mt-[39px] w-[463px]">
+                    @csrf
+
                     <div class="relative mb-6">
                         <div class="relative">
-                            <input type="email"
-                                class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                                placeholder="Email">
-                            <!-- Mail Icon -->
-                            <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
+                            <input type="email" name="email"
+                                   class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
+                                   placeholder="Email" value="{{ old('email') }}" required autofocus>
+                            <!-- Mail Icon (Optional) -->
+                            <div class="absolute transform -translate-y-1/2 left-5 top-1/2">
                                 <!-- Add your mail icon SVG here -->
                             </div>
                         </div>
+                        @error('email')
+                            <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit"
-                        class="mt-[30px] w-[238px] h-[44px] mx-auto block bg-[#BBE67A] rounded-[30px]">
+                            class="mt-[30px] w-[238px] h-[44px] mx-auto block bg-[#BBE67A] rounded-[30px]">
                         <span class="text-[20px] font-medium text-[#385723] font-poppins">Kirim Link</span>
                     </button>
 
