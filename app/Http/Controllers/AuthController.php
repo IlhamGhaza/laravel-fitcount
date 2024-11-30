@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -40,7 +39,7 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/account');
+            return redirect()->intended('/account')->with('success', 'Login berhasil!');
         } else {
             return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
         }
@@ -63,7 +62,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('account');
+        return redirect()->route('account')->with('success', 'Registrasi berhasil!');
     }
 
     // Menampilkan form reset password
@@ -95,7 +94,7 @@ class AuthController extends Controller
         );
 
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', 'Password berhasil direset. Silakan login.');
+            return redirect()->route('login')->with('success', 'Password berhasil direset. Silakan login.');
         }
 
         return back()->withErrors(['email' => 'Terjadi kesalahan. Periksa token atau email Anda dan coba lagi.']);
@@ -105,6 +104,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect()->route('home');
+
+        return redirect()->route('home')->with('success', 'You have been logged out successfully.');
     }
 }
