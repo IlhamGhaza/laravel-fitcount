@@ -21,7 +21,7 @@
         <div class="relative w-full h-[776px]">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0">
-                <img src="{{ asset('images/image1.svg') }}" class="w-full h-full object-cover" alt="Background">
+                <img src="{{ asset('images/image1.svg') }}" class="object-cover w-full h-full" alt="Background">
                 <div class="absolute inset-0 bg-gradient-radial from-[rgba(20,33,11,0.81)] to-[rgba(15,23,9,0.81)]">
                 </div>
             </div>
@@ -36,54 +36,64 @@
                     Daftarkan dirimu disini
                 </p>
 
+                <!-- Display Validation Errors -->
+                @if ($errors->any())
+                    <div class="bg-red-600 text-white p-4 mb-4 rounded-lg w-full max-w-[463px]">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <!-- Register Form -->
-                <form class="mt-[39px] w-[463px]">
+                <form method="POST" action="{{ route('register') }}" class="mt-[39px] w-[463px]">
+                    @csrf
+
+                    <!-- Username Field -->
                     <div class="relative mb-6">
                         <div class="relative">
-                            <input type="text"
+                            <input type="text" name="name" value="{{ old('name') }}"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                                placeholder="Nama Pengguna">
-                            <!-- User Icon -->
-                            <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                                <!-- Add user icon SVG here -->
-                            </div>
+                                placeholder="Nama Pengguna" required autofocus>
                         </div>
+                        @error('name')
+                            <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    <!-- Email Field -->
                     <div class="relative mb-6">
                         <div class="relative">
-                            <input type="email"
+                            <input type="email" name="email" value="{{ old('email') }}"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                                placeholder="Email">
-                            <!-- Mail Icon -->
-                            <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                                <!-- Add mail icon SVG here -->
-                            </div>
+                                placeholder="Email" required>
                         </div>
+                        @error('email')
+                            <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    <!-- Password Field -->
                     <div class="relative mb-6">
-                        <input type="password"
+                        <input type="password" name="password"
                             class="w-full h-[65px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                            placeholder="Kata Sandi">
-                        <!-- Lock Icon -->
-                        <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                            <!-- Add lock icon SVG here -->
-                        </div>
+                            placeholder="Kata Sandi" required>
+                        @error('password')
+                            <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
+                        @enderror
                     </div>
 
-                    <div class="relative">
-                        <input type="password"
+                    <!-- Confirm Password Field -->
+                    <div class="relative mb-6">
+                        <input type="password" name="password_confirmation"
                             class="w-full h-[65px] bg-white/20 border-2 border-white rounded-[7px] pl-[74px] text-white placeholder-[#C7C7C7] backdrop-blur-[20px]"
-                            placeholder="Konfirmasi Kata Sandi">
-                        <!-- Lock Icon -->
-                        <div class="absolute left-5 top-1/2 transform -translate-y-1/2">
-                            <!-- Add lock icon SVG here -->
-                        </div>
+                            placeholder="Konfirmasi Kata Sandi" required>
                     </div>
 
-                    <button type="submit"
-                        class="mt-[30px] w-[238px] h-[44px] mx-auto block bg-[#BBE67A] rounded-[30px]">
+                    <!-- Submit Button -->
+                    <button type="submit" class="mt-[30px] w-[238px] h-[44px] mx-auto block bg-[#BBE67A] rounded-[30px]">
                         <span class="text-[20px] font-medium text-[#385723] font-poppins">Daftar</span>
                     </button>
 
