@@ -37,6 +37,7 @@ class BmiRecordController extends Controller
             'height' => 'required|numeric|min:1',
             'age' => 'required|numeric|min:1',
             'gender' => 'required|string',
+            'activity_level' => 'required|string',
         ]);
 
         // Hitung BMI
@@ -80,4 +81,7 @@ class BmiRecordController extends Controller
             return 'Obese';
         }
     }
+
+    //get recomendation from hasil_bmi
+    //public function getRecomendation($age, $gender, $activityLevel, $bmiCategory)
 }
