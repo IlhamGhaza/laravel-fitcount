@@ -9,8 +9,9 @@ class AuthCheckController extends Controller
 {
     public function checkAuth()
     {
-        return Auth::check()
-            ? redirect()->route('account')
-            : redirect()->route('login');
+        if (Auth::check()) {
+            return redirect()->route('account')->with('success', 'Welcome back!');
+        }
+        return redirect()->route('login')->with('error', 'Please login to continue.');
     }
 }

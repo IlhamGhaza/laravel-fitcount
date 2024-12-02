@@ -25,7 +25,7 @@ class BmiRecordController extends Controller
         }
 
         // Kirim data user ke view untuk mengisi form secara otomatis
-        return view('home', compact('userData'));
+        return redirect(route('home') . '#bmi-section');
     }
 
     // Method untuk menghitung BMI
@@ -83,5 +83,49 @@ class BmiRecordController extends Controller
     }
 
     //get recomendation from hasil_bmi
-    //public function getRecomendation($age, $gender, $activityLevel, $bmiCategory)
+    private function getRecommendation($age, $gender, $activityLevel, $bmiCategory)
+    {
+        $recommendation = '';
+
+        // Rekomendasi berdasarkan kategori BMI
+        switch ($bmiCategory) {
+            case 'Underweight':
+                $recommendation = 'Tingkatkan asupan kalori dengan makanan bernutrisi.';
+                break;
+            case 'Normal weight':
+                $recommendation = 'Pertahankan pola makan sehat dan olahraga rutin.';
+                break;
+            case 'Overweight':
+                $recommendation = 'Cobalah menyeimbangkan pola makan dan aktivitas fisik.';
+                break;
+            case 'Obese':
+                $recommendation = 'Konsultasikan dengan ahli gizi untuk manajemen berat badan.';
+                break;
+        }
+
+        // Tambahkan saran berdasarkan usia
+        if ($age > 50) {
+            $recommendation .= ' Perhatikan kesehatan tulang dengan kalsium dan olahraga ringan.';
+        }
+
+        // Tambahkan saran berdasarkan gender
+        if ($gender === 'female' && $bmiCategory !== 'Normal weight') {
+            $recommendation .= ' Pertimbangkan konsultasi terkait risiko kesehatan perempuan.';
+        }
+
+        // Tambahkan saran berdasarkan tingkat aktivitas
+        switch ($activityLevel) {
+            case 'low':
+                $recommendation .= ' Tingkatkan aktivitas seperti berjalan kaki setiap hari.';
+                break;
+            case 'medium':
+                $recommendation .= ' Pertahankan gaya hidup aktif Anda.';
+                break;
+            case 'high':
+                $recommendation .= ' Luar biasa! Pastikan asupan kalori cukup untuk aktivitas Anda.';
+                break;
+        }
+
+        return $recommendation;
+    }
 }

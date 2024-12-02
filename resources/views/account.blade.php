@@ -14,28 +14,44 @@
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        html{
+        html {
             scroll-behavior: smooth;
         }
     </style>
 </head>
 
 <body>
-    <x-header />
     @if (session('success'))
         <div id="success-message" class="fixed z-50 top-4 right-4">
             <div class="bg-[#BBE67A] text-[#385723] px-6 py-3 rounded-[30px] shadow-lg">
                 <span class="text-lg font-medium">{{ session('success') }}</span>
             </div>
         </div>
-
-        <script>
-            setTimeout(function() {
-                document.getElementById('success-message').style.display = 'none';
-            }, 3000);
-        </script>
     @endif
 
+    @if (session('error'))
+        <div id="error-message" class="fixed z-50 top-4 right-4">
+            <div class="bg-[#FF2D20] text-white px-6 py-3 rounded-[30px] shadow-lg">
+                <span class="text-lg font-medium">{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
+
+    <script>
+        setTimeout(function() {
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+
+    <x-header />
     <div class="min-h-screen bg-white">
 
         <div class="min-h-screen bg-white">

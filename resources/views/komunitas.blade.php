@@ -18,13 +18,44 @@
     @else
     @endif
     <style>
-        html{
+        html {
             scroll-behavior: smooth;
         }
     </style>
 </head>
 
 <body>
+    @if (session('success'))
+        <div id="success-message" class="fixed z-50 top-4 right-4">
+            <div class="bg-[#BBE67A] text-[#385723] px-6 py-3 rounded-[30px] shadow-lg">
+                <span class="text-lg font-medium">{{ session('success') }}</span>
+            </div>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div id="error-message" class="fixed z-50 top-4 right-4">
+            <div class="bg-[#FF2D20] text-white px-6 py-3 rounded-[30px] shadow-lg">
+                <span class="text-lg font-medium">{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
+
+    <script>
+        setTimeout(function() {
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+
+
     <x-header />
 
     <div class="CommunityPage" style="width: 1440px; height: 2806px; position: relative; background: white">
@@ -53,7 +84,7 @@
             </div>
         </div> --}}
         <div class="Frame29" style="width: 249px; height: 91px; left: 97px; top: 413px; position: absolute">
-            <a href="{{route('check.auth1') }}">
+            <a href="{{ route('check.auth') }}">
                 <div class="Rectangle221"
                     style="width: 249px; height: 60px; left: 0px; top: 15px; position: absolute; border-radius: 100px; border: 3px white solid">
                 </div>
@@ -70,12 +101,15 @@
             Temukan artikel dan inspirasi setiap bulannya di emailmu.</div>
         <div
             style="width: 753px; left: 344px; top: 779px; position: absolute; color: black; font-size: 20px; font-family: Poppins; font-weight: 500; word-wrap: break-word">
-            Bergabunglah dengan komunitas FitCount untuk mendapatkan dukungan dan motivasi dalam perjalanan kesehatan
+            Bergabunglah dengan komunitas FitCount untuk mendapatkan dukungan dan motivasi dalam perjalanan
+            kesehatan
             Anda. Bersama-sama kita bisa mencapai tujuan kebugaran dan gaya hidup sehat yang lebih baik.</div>
         <div
             style="width: 753px; left: 344px; top: 996px; position: absolute; color: black; font-size: 20px; font-family: Poppins; font-weight: 500; word-wrap: break-word">
-            Dapatkan akses eksklusif ke berbagai fitur menarik seperti tracking BMI, event kesehatan terkini, dan tools
-            perencanaan aktivitas. Komunitas kami terdiri dari para profesional kesehatan dan sesama anggota yang siap
+            Dapatkan akses eksklusif ke berbagai fitur menarik seperti tracking BMI, event kesehatan terkini, dan
+            tools
+            perencanaan aktivitas. Komunitas kami terdiri dari para profesional kesehatan dan sesama anggota yang
+            siap
             berbagi pengalaman dan tips praktis untuk hidup sehat.</div>
         <div class="Rectangle226"
             style="width: 876px; height: 365px; left: 282px; top: 1291px; position: absolute; background: white; border-radius: 25px; border: 4px #385723 solid">
@@ -92,11 +126,13 @@
             perubahan berat badan dan memberikan rekomendasi yang sesuai dengan kondisi tubuh Anda.</div>
         <div
             style="width: 504px; left: 322px; top: 1826px; position: absolute; color: black; font-size: 20px; font-family: Poppins; font-weight: 500; word-wrap: break-word">
-            Jangan lewatkan berbagai event kesehatan menarik! Dari webinar nutrisi, workshop olahraga, hingga challenge
+            Jangan lewatkan berbagai event kesehatan menarik! Dari webinar nutrisi, workshop olahraga, hingga
+            challenge
             kesehatan bulanan. Selalu update dengan informasi terbaru untuk mendukung gaya hidup sehat Anda.</div>
         <div
             style="width: 504px; left: 322px; top: 2231px; position: absolute; color: black; font-size: 20px; font-family: Poppins; font-weight: 500; word-wrap: break-word">
-            Kelola rutinitas sehat Anda dengan To Do List yang praktis. Rencanakan jadwal olahraga, pengingat minum air,
+            Kelola rutinitas sehat Anda dengan To Do List yang praktis. Rencanakan jadwal olahraga, pengingat minum
+            air,
             dan catat target kesehatan harian Anda dengan lebih terstruktur dan mudah diikuti.</div>
         <div class="Group14" style="width: 230.63px; height: 205px; left: 866px; top: 1371px; position: absolute">
             <div class="SubwayWrite" style="width: 205px; height: 205px; left: 0px; top: 0px; position: absolute">

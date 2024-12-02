@@ -19,8 +19,6 @@ Route::get('/', function () {
 //     return redirect('home.tentang.section');
 // })->name('tentang');
 
-
-
 //result
 Route::get('/result-bmi', function () {
     return view('result');
@@ -65,11 +63,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/profile/update', [UserController::class, 'update'])->name('users.update');
 
-    //Todolist route
+    // route task
     Route::get('/profile/todo', function () {
         return view('user.todo');
     })->name('todo');
-
+    Route::get('/todo', [TaskController::class, 'index'])->name('todo.index');
+    // With this route
+    Route::get('/profile/todo', [TaskController::class, 'show'])->name('todo');
+    // show task
     Route::get('/todo', [TaskController::class, 'show'])->name('todo.show');
     // create task
     Route::get('/todo/create', [TaskController::class, 'create'])->name('todo.create');
@@ -80,5 +81,4 @@ Route::middleware(['auth'])->group(function () {
 
     // create task progress pada tugas
     Route::post('/todo/{task}/add-progress', [TaskController::class, 'addProgress'])->name('todo.addProgress');
-
 });

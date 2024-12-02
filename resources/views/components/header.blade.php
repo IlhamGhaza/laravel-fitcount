@@ -80,9 +80,9 @@
         style="display: none; position: absolute; top: 79px; left: 0; width: 100%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000;">
         <a href="{{ route('home') }}"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #eee;">Utama</a>
-        <a href="{{ route('hitung') }}"
+        <a href="{{ route('home') }}"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #eee;">Hitung</a>
-        <a href="{{ route('tentang') }}"
+        <a href="{{ route('home') }}"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #eee;">Tentang</a>
         <a href="{{ route('komunitas') }}"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif;">Komunitas</a>
