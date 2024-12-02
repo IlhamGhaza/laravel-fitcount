@@ -9,6 +9,12 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400,500,700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        html{
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 
 <body>
@@ -164,7 +170,7 @@
                         based on height and weight and results can be categorised into different classes, ranging from
                         underweight through to obesity class III.
                     </p>
-                    <a href="{{ route('hitung') }}"
+                    <a href="#bmi-section"
                         class="inline-block bg-[#BBE67A] text-black text-lg font-bold px-6 py-3 rounded-md shadow-md">
                         Hitung Sekarang >>
                     </a>

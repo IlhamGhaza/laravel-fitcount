@@ -17,6 +17,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
     @endif
+    <style>
+        html{
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 
 <body>

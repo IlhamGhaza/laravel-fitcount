@@ -18,12 +18,12 @@
                 style="text-align: center; color: black; font-size: clamp(16px, 1.5vw, 20px); font-family: 'Poppins', sans-serif; font-weight: 600; transition: color 0.3s;">
                 Utama</div>
         </a>
-        <a href="{{ route('hitung') }}" style="text-decoration: none;">
+        <a href="{{ route('home') }}#bmi-section" style="text-decoration: none;">
             <div class="Hitung"
                 style="text-align: center; color: black; font-size: clamp(16px, 1.5vw, 20px); font-family: 'Poppins', sans-serif; font-weight: 600; transition: color 0.3s;">
                 Hitung</div>
         </a>
-        <a href="{{ route('tentang') }}" style="text-decoration: none;">
+        <a href="{{ route('home') }}#tentang.section" style="text-decoration: none;">
             <div class="Tentang"
                 style="text-align: center; color: black; font-size: clamp(16px, 1.5vw, 20px); font-family: 'Poppins', sans-serif; font-weight: 600; transition: color 0.3s;">
                 Tentang</div>
