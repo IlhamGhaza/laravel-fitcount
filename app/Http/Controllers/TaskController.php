@@ -9,18 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function create()
+    {
+        $tasks = Task::where('user_id', Auth::id())->get();
+        return view('user.create_task' , compact('tasks'))->with('message', 'Silahkan tambahkan tugas baru!');
+    }
+
+
     // Menampilkan halaman todo dan daftar tugas
     public function show()
     {
         $user = Auth::user();
         $tasks = Task::where('user_id', $user->id)->get();
         return view('user.todo', compact('tasks'));
-    }
-
-    // Menambahkan tugas baru
-    public function create()
-    {
-        return view('user.create_task');
     }
 
     public function store(Request $request)
