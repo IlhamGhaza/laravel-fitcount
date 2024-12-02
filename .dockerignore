@@ -1,0 +1,51 @@
+# Dependencies
+/node_modules
+/vendor
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Development files
+.git
+.gitignore
+.gitattributes
+.editorconfig
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+# Storage and cache
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*
+
+# Testing
+/tests
+phpunit.xml
+.phpunit.result.cache
+
+# Build assets
+/public/hot
+/public/storage
+/public/build
+
+# Documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+
+# Docker
+Dockerfile
+docker-compose.yml
+docker/
+.docker
+
+# Misc
+.DS_Store
+Thumbs.db
