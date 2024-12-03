@@ -16,7 +16,9 @@ RUN apk add --no-cache \
     libxml2-dev \
     oniguruma-dev \
     libzip-dev \
-    tzdata && \
+    tzdata \
+    nodejs \
+    npm && \
     docker-php-ext-install \
     intl \
     pdo \
@@ -31,17 +33,30 @@ RUN apk add --no-cache \
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Install Node.js and npm
-RUN apk add --no-cache nodejs npm
-
-# Copy application files
-COPY . .
+# Copy composer files first
+COPY composer.json composer.lock ./
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
 # Install Node.js dependencies
-RUN npm install && npm run build
+RUN npm ci
+
+# Copy the rest of the application
+COPY . .
+
+# Build assets
+RUN npm run build
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage
+
+# Create storage link
+RUN php artisan storage:link
 
 # Expose application port
 EXPOSE 8000
