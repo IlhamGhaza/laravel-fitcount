@@ -47,9 +47,21 @@
 
 3. **Copy the `.env.example` file to `.env`**:
 
-   ```bash
-   cp .env.example .env
-   ```
+    linux/macOS:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    windows:
+
+    ```powershell
+    copy .env.example .env
+    ```
+
+    The `copy` command is the Windows equivalent of the Unix/Linux `cp` command. This will work correctly on Windows systems to create a copy of the `.env.example` file as `.env`.
+
+    Both methods achieve the same result - creating a copy of the environment configuration file - just using the appropriate command for the operating system.
 
 4. **Generate application key**:
 
