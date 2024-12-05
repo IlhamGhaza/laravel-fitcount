@@ -4,8 +4,7 @@
 
 # Environment files
 .env
-.env.*
-!.env.example
+
 
 # Development files
 .git
@@ -39,12 +38,6 @@ README.md
 CHANGELOG.md
 CONTRIBUTING.md
 LICENSE
-
-# Docker
-Dockerfile
-docker-compose.yml
-docker/
-.docker
 
 # Misc
 .DS_Store
