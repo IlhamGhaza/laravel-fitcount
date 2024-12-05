@@ -86,6 +86,7 @@ composer dev
 ```
 
 This command runs:
+
 - Laravel development server
 - Queue listener for background jobs
 - Real-time log viewer
