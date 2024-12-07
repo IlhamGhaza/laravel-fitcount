@@ -17,16 +17,21 @@ services:
       - fitcount-network
     depends_on:
       - db
+    environment:
+      DB_HOST: db
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
 
   db:
     image: mariadb:10.11-alpine
     container_name: laravel-fitcount-db
     restart: unless-stopped
     environment:
-      MARIADB_DATABASE: laravel_fitcount
-      MARIADB_ROOT_PASSWORD: root
-      MARIADB_PASSWORD: password
-      MARIADB_USER: fitcount
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - dbdata:/var/lib/mysql
     ports:
