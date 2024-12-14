@@ -53,12 +53,18 @@
 
     <x-header />
     <div class="min-h-screen bg-white">
-
         <div class="min-h-screen bg-white">
             <!-- Profile Section -->
             <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="bg-[#385723] rounded-[50px] shadow-lg p-8">
-                    <div class="flex items-center gap-8">
+                <div class="relative bg-[#385723] rounded-[50px] shadow-lg p-8 overflow-hidden">
+                    <!-- Background Pattern -->
+                    <div class="absolute inset-0 opacity-5">
+                        <img src="{{ asset('images/image12.svg') }}" alt="Background Pattern"
+                            class="object-cover w-full h-full">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="relative z-10 flex items-center gap-8">
                         <div class="w-[183px] h-[183px]">
                             @if (Auth::user()->avatar)
                                 <img class="w-full h-full rounded-full"
@@ -105,22 +111,102 @@
                     <div class="bg-[#A5B987] rounded-[20px] p-8 shadow-lg">
                         <h2 class="text-4xl font-bold text-center text-white">Skor BMI</h2>
                         <div class="my-4 border-t border-white"></div>
-                        <p class="font-bold text-center text-white text-8xl">15,62</p>
+                        <p class="font-bold text-center text-white text-8xl">
+                            @php
+                                $averageScore = $bmiRecords
+                                    ->groupBy(function ($date) {
+                                        return $date->created_at->format('Y-m-d');
+                                    })
+                                    ->map(function ($group) {
+                                        return $group->last()->bmi_score;
+                                    })
+                                    ->avg();
+                            @endphp
+                            {{ $averageScore ? number_format($averageScore, 2) : '0.00' }}
+                        </p>
                     </div>
 
                     <div class="bg-[#385723] rounded-[20px] p-8 shadow-lg">
                         <h2 class="text-4xl font-bold text-center text-white">Kategori BMI</h2>
                         <div class="my-4 border-t border-white"></div>
-                        <p class="text-6xl font-bold text-center text-white">Kurang Ideal</p>
+                        <p class="text-6xl font-bold text-center text-white">
+                            @php
+                                $category = '';
+                                if ($averageScore) {
+                                    if ($averageScore < 18.5) {
+                                        $category = 'Underweight';
+                                    } elseif ($averageScore >= 18.5 && $averageScore < 24.9) {
+                                        $category = 'Normal weight';
+                                    } elseif ($averageScore >= 25 && $averageScore < 29.9) {
+                                        $category = 'Overweight';
+                                    } elseif ($averageScore >= 30 && $averageScore < 34.9) {
+                                        $category = 'Obese 1';
+                                    } elseif ($averageScore >= 35 && $averageScore < 39.9) {
+                                        $category = 'Obese 2';
+                                    } else {
+                                        $category = 'Obese 3';
+                                    }
+                                }
+                            @endphp
+                            {{ $category ?: 'Belum ada data' }}
+                        </p>
                     </div>
                 </div>
 
                 <!-- BMI History -->
                 <div class="mt-12 bg-[#F6F6F6] rounded-lg shadow-lg p-8">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between mb-8">
                         <h2 class="text-4xl font-semibold">Histori Skor BMI</h2>
-                        <a href="#" class="text-[#385723] text-xl font-semibold">Lihat Semua ></a>
+                        <a href="{{ route('progress') }}" class="text-[#385723] text-xl font-semibold">Lihat Semua
+                            ></a>
                     </div>
+
+                    @if (Auth::check() && $bmiRecords->count() > 0)
+                        <div class="relative h-[300px]">
+                            <!-- Graph Container -->
+                            <div class="w-full h-[200px] relative">
+                                <!-- Graph Lines with Max Angle Constraint -->
+                                <div class="absolute inset-0 flex items-center justify-between">
+                                    @foreach ($bmiRecords as $index => $record)
+                                        @if (!$loop->last)
+                                            @php
+                                                $nextRecord = $bmiRecords[$index + 1];
+                                                $angle = min(
+                                                    max(($record->bmi_score - $nextRecord->bmi_score) * 5, -15),
+                                                    15,
+                                                );
+                                            @endphp
+                                            <div class="flex-1 h-1 bg-[#B8C8A1]"
+                                                style="transform: rotate({{ $angle }}deg); transform-origin: left center;">
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                <!-- Data Points -->
+                                <div class="absolute inset-0 flex items-center justify-between">
+                                    @foreach ($bmiRecords as $record)
+                                        <div class="relative flex flex-col items-center">
+                                            <div class="w-4 h-4 bg-[#385723] rounded-full"></div>
+                                            <div class="mt-2 text-sm font-medium">
+                                                {{ number_format($record->bmi_score, 1) }}
+                                            </div>
+                                            <div class="mt-1 text-xs text-gray-600">
+                                                {{ $record->created_at->format('d/m') }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 text-center">
+                            <p class="text-[#385723] text-xl font-semibold">Perkembangan Skor BMI</p>
+                        </div>
+                    @else
+                        <div class="py-8 text-center">
+                            <p class="text-gray-500">Belum ada data BMI yang tersimpan</p>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- To Do List -->
@@ -128,8 +214,7 @@
                     <div class="px-4 mx-auto max-w-7xl">
                         <div class="flex items-center justify-between">
                             <h2 class="text-4xl font-bold">To do list</h2>
-                            <a href="{{ route('todo') }}" class="text-[#385723] text-xl font-semibold">Lihat Semua>
-                            </a>
+                            <a href="{{ route('todo') }}" class="text-[#385723] text-xl font-semibold">Lihat Semua></a>
                         </div>
                     </div>
                 </div>
