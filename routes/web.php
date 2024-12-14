@@ -51,34 +51,53 @@ Route::post('forgot-password', [AuthController::class, 'resetPassword'])->name('
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'reset'])->name('password.update');
 
+Route::get('/bmi', [BmiRecordController::class, 'showForm'])->name('bmi.form');
+Route::post('/bmi/calculate', [BmiRecordController::class, 'calculate'])->name('bmi.calculate');
+
+Route::get('/bmi/result', [BmiRecordController::class, 'showResult'])->name('bmi.result');
+// Route::get('/progress', function () {
+//     return view('progress'); // Blade untuk grafik progress
+// })->name('progress.graph');
+
 //route group user login == true
-Route::middleware(['auth'])->group(function () {
-    Route::get('/account', function () {
-        return view('account');
-    })->name('account');
-    // logout
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware(['auth'])->group(
+    function () {
+        Route::get('/account', function () {
+            return view('account');
+        })->name('account');
+        Route::get('/account', [BmiRecordController::class, 'getLatestBmiRecords'])->name('account');
 
-    // edit profile
-    Route::get('/profile/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/profile/update', [UserController::class, 'update'])->name('users.update');
+        // logout
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    // route task
-    Route::get('/profile/todo', function () {
-        return view('user.todo');
-    })->name('todo');
-    Route::get('/todo', [TaskController::class, 'index'])->name('todo.index');
-    // With this route
-    Route::get('/profile/todo', [TaskController::class, 'show'])->name('todo');
-    // show task
-    Route::get('/todo', [TaskController::class, 'show'])->name('todo.show');
-    // create task
-    Route::get('/todo/create', [TaskController::class, 'create'])->name('todo.create');
-    Route::post('/todo', [TaskController::class, 'store'])->name('todo.store');
+        // route bmi
+        Route::post('/bmi/save', [BmiRecordController::class, 'saveBmiRecord'])->name('save-bmi');
+        Route::get('/progress', [BmiRecordController::class, 'showProgress'])->name('progress');
+        Route::get('/filter-bmi/{period}', [BmiRecordController::class, 'filterBmi']);
 
-    // Update status task
-    Route::post('/todo/{task}/update-status', [TaskController::class, 'updateStatus'])->name('todo.updateStatus');
 
-    // create task progress pada tugas
-    Route::post('/todo/{task}/add-progress', [TaskController::class, 'addProgress'])->name('todo.addProgress');
-});
+        // edit profile
+        Route::get('/profile/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/profile/update', [UserController::class, 'update'])->name('users.update');
+
+        // route task
+        Route::get('/profile/todo', function () {
+            return view('user.todo');
+        })->name('todo');
+        Route::get('/todo', [TaskController::class, 'index'])->name('todo.index');
+        // With this route
+        Route::get('/profile/todo', [TaskController::class, 'show'])->name('todo');
+        // show task
+        Route::get('/todo', [TaskController::class, 'show'])->name('todo.show');
+        // create task
+        Route::get('/todo/create', [TaskController::class, 'create'])->name('todo.create');
+        Route::post('/todo', [TaskController::class, 'store'])->name('todo.store');
+
+        // Update status task
+        Route::post('/todo/{task}/update-status', [TaskController::class, 'updateStatus'])->name('todo.updateStatus');
+
+        // create task progress pada tugas
+        Route::post('/todo/{task}/add-progress', [TaskController::class, 'addProgress'])->name('todo.addProgress');
+    }
+
+);
