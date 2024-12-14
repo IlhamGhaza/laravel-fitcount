@@ -1,5 +1,5 @@
 # Base image
-FROM php:8.3-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 # Install dependencies
 RUN apk add --no-cache \
@@ -9,14 +9,15 @@ RUN apk add --no-cache \
     libwebp-dev \
     libxpm-dev \
     libxml2-dev \
+    freetype-dev \
     git \
     nodejs \
     npm \
-    bash \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
     && docker-php-ext-install gd pdo pdo_mysql \
     && npm install -g npm@latest \
     && npm install -g vite
+
 
 # Set working directory
 WORKDIR /var/www
