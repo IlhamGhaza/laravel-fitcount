@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Account - FitCount</title>
+    <title>FitCount- Account</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -208,6 +208,7 @@
                         </div>
                     @endif
                 </div>
+                <!-- End of BMI History -->
 
                 <!-- To Do List -->
                 <div class="mt-12 bg-[#385723]/20 py-12">
@@ -215,6 +216,45 @@
                         <div class="flex items-center justify-between">
                             <h2 class="text-4xl font-bold">To do list</h2>
                             <a href="{{ route('todo') }}" class="text-[#385723] text-xl font-semibold">Lihat Semua></a>
+                        </div>
+
+                        <!-- Task Progress Circles -->
+                        <div class="flex justify-center mt-8 space-x-8">
+                            @php
+                                $today = now();
+                                $weekStart = $today->startOfWeek();
+                            @endphp
+
+                            @for ($i = 0; $i < 7; $i++)
+                                @php
+                                    $currentDate = $weekStart->copy()->addDays($i);
+                                    $completedTasks = Auth::user()
+                                        ->tasks()
+                                        ->whereDate('created_at', $currentDate)
+                                        ->where('status', 'completed')
+                                        ->get();
+
+                                    // Debug output
+                                    \Log::info(
+                                        'Date: ' . $currentDate . ' Complete Tasks: ' . $completedTasks->count(),
+                                    );
+                                @endphp
+
+                                <div class="flex flex-col items-center">
+                                    <div
+                                        class="w-[90px] h-[90px] rounded-full shadow-md flex items-center justify-center
+                {{ $completedTasks->count() > 0 ? 'bg-[#A5B987]' : 'bg-[#C7C7C7]' }}">
+                                        @if ($completedTasks->count() > 0)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-[#F9EDB2]"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        @endif
+                                    </div>
+                                    <span class="mt-4 text-3xl font-bold">{{ $i + 1 }}</span>
+                                </div>
+                            @endfor
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskFactory> */
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
 
     protected $fillable = ['user_id', 'task_name', 'description', 'status', 'priority'];
@@ -22,5 +22,11 @@ class Task extends Model
     public function taskProgress()
     {
         return $this->hasMany(TaskProgress::class);
+    }
+
+
+    public function isComplete()
+    {
+        return $this->status === 'completed';
     }
 }
