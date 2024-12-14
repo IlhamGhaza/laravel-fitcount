@@ -10,16 +10,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-
-// Route::get('/hitung', function () {
-//     return redirect('home.bmi.section');
-// })->name('hitung');
-
-// Route::get('/tentang', function () {
-//     return redirect('home.tentang.section');
-// })->name('tentang');
-
-//result
 Route::get('/result-bmi', function () {
     return view('result');
 })->name('result');

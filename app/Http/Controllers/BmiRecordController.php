@@ -92,52 +92,58 @@ class BmiRecordController extends Controller
         }
     }
 
-    // Method to get recommendation based on BMI results
-    private function getRecommendation($age, $gender, $activityLevel, $bmiCategory)
-    {
-        $recommendation = '';
+    private function getRecommendation(
+        $age,
+        $gender,
+        $activityLevel,
+        $bmiCategory
+    ) {
+        $recommendations = [];
 
         // Recommendations based on BMI category
         switch ($bmiCategory) {
             case 'Underweight':
-                $recommendation = 'Tingkatkan asupan kalori dengan makanan bernutrisi.';
+                $recommendations[] = "1. Tingkatkan asupan kalori dengan makanan bernutrisi";
                 break;
             case 'Normal weight':
-                $recommendation = 'Pertahankan pola makan sehat dan olahraga rutin.';
+                $recommendations[] = "1. Pertahankan pola makan sehat dan olahraga rutin";
                 break;
             case 'Overweight':
-                $recommendation = 'Cobalah menyeimbangkan pola makan dan aktivitas fisik.';
+                $recommendations[] = "1. Cobalah menyeimbangkan pola makan dan aktivitas fisik";
                 break;
             case 'Obese':
-                $recommendation = 'Konsultasikan dengan ahli gizi untuk manajemen berat badan.';
+                $recommendations[] = "1. Konsultasikan dengan ahli gizi untuk manajemen berat badan";
                 break;
         }
 
         // Additional advice based on age
         if ($age > 50) {
-            $recommendation .= ' Perhatikan kesehatan tulang dengan kalsium dan olahraga ringan.';
+            $recommendations[] = "2. Perhatikan kesehatan tulang dengan kalsium dan olahraga ringan";
         }
 
         // Additional advice based on gender
         if ($gender === 'female' && $bmiCategory !== 'Normal weight') {
-            $recommendation .= ' Pertimbangkan konsultasi terkait risiko kesehatan perempuan.';
+            $recommendations[] = "3. Pertimbangkan konsultasi terkait risiko kesehatan perempuan";
         }
 
         // Additional advice based on activity level
         switch ($activityLevel) {
             case 'low':
-                $recommendation .= ' Tingkatkan aktivitas seperti berjalan kaki setiap hari.';
+                $recommendations[] = "4. Tingkatkan aktivitas seperti berjalan kaki setiap hari";
                 break;
             case 'medium':
-                $recommendation .= ' Pertahankan gaya hidup aktif Anda.';
+                $recommendations[] = "4. Pertahankan gaya hidup aktif Anda";
                 break;
             case 'high':
-                $recommendation .= ' Luar biasa! Pastikan asupan kalori cukup untuk aktivitas Anda.';
+                $recommendations[] = "4. Luar biasa! Pastikan asupan kalori cukup untuk aktivitas Anda";
                 break;
         }
 
-        return $recommendation;
+        return implode("\n\n", $recommendations);
     }
+
+
+
 
     // Method to save BMI record
     public function saveBmiRecord(Request $request)

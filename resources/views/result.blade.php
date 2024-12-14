@@ -12,7 +12,6 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400,500,700&display=swap" rel="stylesheet">
 
-
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -26,7 +25,7 @@
     </style>
 </head>
 
-<body style="font-family: Poppins, sans-serif; color: black;">
+<body style="font-family: Poppins, sans-serif; margin: 0; padding: 0; background: #384031;">
     <x-header />
 
     <!-- Message Card -->
@@ -105,39 +104,9 @@
         </div>
     @endif
 
-
-    {{-- status success --}}
-    @if (session('success'))
-        <div id="success-message" class="fixed z-50 top-4 right-4">
-            <div class="bg-[#BBE67A] text-[#385723] px-6 py-3 rounded-[30px] shadow-lg">
-                <span class="text-lg font-medium">{{ session('success') }}</span>
-            </div>
-        </div>
-
-        <script>
-            setTimeout(function() {
-                document.getElementById('success-message').style.display = 'none';
-            }, 3000);
-        </script>
-    @endif
-    {{-- status error --}}
-    @if (session('error'))
-        <div id="error-message" class="fixed z-50 top-4 right-4">
-            <div class="bg-[#FF2D20] text-[#385723] px-6 py-3 rounded-[30px] shadow-lg">
-                <span class="text-lg font-medium">{{ session('error') }}</span>
-            </div>
-        </div>
-
-        <script>
-            setTimeout(function() {
-                document.getElementById('error-message').style.display = 'none';
-            }, 3000);
-        </script>
-    @endif
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const bmiScore = {{ $bmiScore ?? 0 }}; // Get BMI score from controller
+            const bmiScore = {{ $bmiScore ?? 0 }};
             const indicator = document.getElementById("bmi-indicator");
             const parameterContainer = document.querySelector(".Parameter");
 
@@ -145,109 +114,131 @@
                     min: 0,
                     max: 18.5,
                     position: 0
-                }, // Underweight
+                }, // Underweight: 0-16.66%
                 {
                     min: 18.5,
                     max: 24.9,
-                    position: 1
-                }, // Normal weight
+                    position: 16.66
+                }, // Normal: 16.66-33.32%
                 {
                     min: 25,
                     max: 29.9,
-                    position: 2
-                }, // Overweight
+                    position: 33.32
+                }, // Overweight: 33.32-49.98%
                 {
                     min: 30,
+                    max: 34.9,
+                    position: 49.98
+                }, // Obese 1: 49.98-66.64%
+                {
+                    min: 35,
+                    max: 39.9,
+                    position: 66.64
+                }, // Obese 2: 66.64-83.3%
+                {
+                    min: 40,
                     max: 100,
-                    position: 3
-                }, // Obese
+                    position: 83.3
+                } // Obese 3: 83.3-100%
             ];
 
             const range = ranges.find((r) => bmiScore >= r.min && bmiScore <= r.max);
             if (range) {
-                const segmentWidth = parameterContainer.offsetWidth / ranges.length;
-                indicator.style.left = `${range.position * segmentWidth + segmentWidth / 2 - 5}px`;
+                const containerWidth = document.querySelector(".Rectangle2").offsetWidth;
+                const position = (range.position * containerWidth) / 100;
+                indicator.style.left = `${position}px`;
             }
         });
     </script>
 
-    {{-- design --}}
     <!-- Main Content Section -->
-    <div style="width: 100vw; margin: auto; position: relative; background: #384031;">
+    <div style="width: 100%; height: auto; padding: 40px 0; background: #384031;">
+        <!-- Main Card -->
         <div
-            style="width: 1234px; height: 660px; margin: 40px auto; background: #D4F3B7; border-radius: 30px; box-shadow: 0px 4px 4px #F9EDB2; position: relative; overflow: hidden;">
-            <!-- Skor BMI -->
+            style="width: 90%; max-width: 1234px; margin: 0 auto; background: #D4F3B7; border-radius: 30px; position: relative; padding: 40px 20px;">
+            <!-- BMI Score and Category Cards Container -->
             <div
-                style="width: 400px; height: 250px; background: #FEFAE0; box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.25); border-radius: 70px; text-align: center; position: absolute; top: 50px; left: 80px;">
-                <p style="margin: 20px 0; font-size: 40px; font-weight: 500;">Skor BMI kamu</p>
-                <p style="font-size: 48px; font-weight: 400;">{{ $bmiScore ?? '15.62' }}</p>
+                style="display: flex; justify-content: space-between; max-width: 900px; margin: 20px auto; flex-wrap: wrap; gap: 20px;">
+                <!-- BMI Score Card -->
+                <div
+                    style="flex: 1; min-width: 300px; max-width: 400px; background: #FEFAE0; border-radius: 25px; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 15px 0;">Skor BMI kamu</h3>
+                    <p style="font-size: 36px; font-weight: bold; margin: 0;">{{ $bmiScore ?? 'N/A' }}</p>
+                </div>
+
+                <!-- Category Card -->
+                <div
+                    style="flex: 1; min-width: 300px; max-width: 400px; background: #FEFAE0; border-radius: 25px; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 15px 0;">Kategori</h3>
+                    <p style="font-size: 40px; font-weight: 400;">{{ $bmiCategory ?? 'Berat Badan Kurang' }}</p>
+                </div>
             </div>
 
-            <!-- Kategori BMI -->
-            <div
-                style="width: 400px; height: 250px; background: #FEFAE0; box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.25); border-radius: 70px; text-align: center; position: absolute; top: 50px; right: 80px;">
-                <p style="margin: 20px 0; font-size: 40px; font-weight: 500;">Kategori</p>
-                <p style="font-size: 40px; font-weight: 400;">{{ $bmiCategory ?? 'Berat Badan Kurang' }}</p>
-            </div>
-
-            <!-- Buttons -->
-            <div
-                style="position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 20px;">
+            <!-- Action Buttons -->
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 40px;">
                 <button onclick="window.location.href='{{ route('bmi.form') }}'"
-                    style="padding: 15px 30px; background: #BBE67A; color: black; font-size: 24px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer;">Ulangi
-                    Perhitungan</button>
-
-                <form action="{{ route('save-bmi') }}" method="POST" style="display: inline-block;">
+                    style="padding: 12px 30px; background: #BBE67A; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer;">
+                    Ulangi Perhitungan
+                </button>
+                <form action="{{ route('save-bmi') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit"
-                        style="padding: 15px 30px; background: #BBE67A; color: black; font-size: 24px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer;">Simpan</button>
+                        style="padding: 12px 30px; background: #BBE67A; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer;">
+                        Simpan
+                    </button>
                 </form>
             </div>
         </div>
 
         <!-- BMI Details Section -->
-        <div class="FrameBmiParameter" style="width: 1440px; height: 776px; position: relative;">
-            <!-- Background -->
-            <div class="Rectangle2" style="width: 100vw; height: 776px; position: absolute; background: white;"></div>
+        <div style="width: 100%; background: white; padding: 50px 0; margin-top: 80px;">
+            <h2 style="text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 40px; color: black;">
+                Hasil BMI Anda: {{ $bmiCategory ?? 'N/A' }}
+            </h2>
 
-            <!-- Judul Hasil BMI -->
-            <div class="HasilBmiAnda"
-                style="width: 100%; text-align: center; color: black; font-size: 48px; font-family: Poppins; font-weight: 700; position: absolute; top: 50px;">
-                Hasil BMI Anda: <span id="bmi-category">{{ $bmiCategory ?? 'N/A' }}</span>
+            <!-- BMI Scale Container -->
+            <div style="width: 100%; max-width: 1000px; margin: 0 auto 30px auto; position: relative;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <div
+                        style="width: 16.66%; height: 10px; background: linear-gradient(90deg, #7BABD3 0%, #7BABD3 100%);">
+                    </div>
+                    <div
+                        style="width: 16.66%; height: 10px; background: linear-gradient(90deg, #57BC6E 0%, #57BC6E 100%);">
+                    </div>
+                    <div
+                        style="width: 16.66%; height: 10px; background: linear-gradient(90deg, #EADF45 0%, #EADF45 100%);">
+                    </div>
+                    <div
+                        style="width: 16.66%; height: 10px; background: linear-gradient(90deg, #F5833D 0%, #F5833D 100%);">
+                    </div>
+                    <div
+                        style="width: 16.66%; height: 10px; background: linear-gradient(90deg, #F25E5E 0%, #F25E5E 100%);">
+                    </div>
+                    <div
+                        style="width: 16.66%; height: 10px; background: linear-gradient(90deg, #000000 0%, #000000 100%);">
+                    </div>
+                </div>
+                <!-- BMI Indicator -->
+                <div id="bmi-indicator"
+                    style="width: 3px; height: 20px; background-color: black; position: absolute; top: -5px; transform: translateX(-50%);">
+                </div>
+
+                <!-- Scale Labels -->
+                <div style="display: flex; justify-content: space-between; padding: 0 10px;">
+                    <span style="width: 16.66%; text-align: center; font-size: 14px;">Underweight</span>
+                    <span style="width: 16.66%; text-align: center; font-size: 14px;">Normal weight</span>
+                    <span style="width: 16.66%; text-align: center; font-size: 14px;">Overweight</span>
+                    <span style="width: 16.66%; text-align: center; font-size: 14px;">Obese 1</span>
+                    <span style="width: 16.66%; text-align: center; font-size: 14px;">Obese 2</span>
+                    <span style="width: 16.66%; text-align: center; font-size: 14px;">Obese 3</span>
+                </div>
             </div>
 
-            <!-- Parameter Garis BMI -->
-            <div class="Parameter"
-                style="width: 80%; height: 142px; margin: auto; position: absolute; top: 300px; display: flex; justify-content: space-between;">
-                <!-- Grup Garis -->
-                <div style="width: 25%; display: flex; flex-direction: column; align-items: center;">
-                    <div style="width: 100%; height: 10px; background-color: #7BABD3;"></div>
-                    <p style="font-size: 14px; font-family: Poppins; margin-top: 5px; text-align: center;">Underweight
-                    </p>
-                </div>
-                <div style="width: 25%; display: flex; flex-direction: column; align-items: center;">
-                    <div style="width: 100%; height: 10px; background-color: #57BC6E;"></div>
-                    <p style="font-size: 14px; font-family: Poppins; margin-top: 5px; text-align: center;">Normal weight
-                    </p>
-                </div>
-                <div style="width: 25%; display: flex; flex-direction: column; align-items: center;">
-                    <div style="width: 100%; height: 10px; background-color: #EADF45;"></div>
-                    <p style="font-size: 14px; font-family: Poppins; margin-top: 5px; text-align: center;">Overweight
-                    </p>
-                </div>
-                <div style="width: 25%; display: flex; flex-direction: column; align-items: center;">
-                    <div style="width: 100%; height: 10px; background-color: #F5833D;"></div>
-                    <p style="font-size: 14px; font-family: Poppins; margin-top: 5px; text-align: center;">Obese</p>
-                </div>
-            </div>
-
-
-            <!-- Indikator BMI -->
-            <div id="bmi-indicator"
-                style="width: 10px; height: 142px; background-color: black; position: absolute; top: 300px; left: calc(50% - 5px);">
-            </div>
+            <!-- Message -->
+            <p style="text-align: center; font-size: 16px; max-width: 800px; margin: 30px auto; line-height: 1.5;">
+                {{ $recommendation ?? 'N/A' }}
+            </p>
         </div>
-
 
         <!-- BMI Range Section -->
         <div class="FrameBmiParameter"
@@ -257,7 +248,7 @@
                 style="width: 100%; height: 736px; position: absolute; background: #385723; border-radius: 30px; margin-top: 20px;">
                 <!-- Gradient Bar -->
                 <div class="gradient-bar"
-                    style="width: 265px; height: 580px; margin: 78px 172px; position: relative; background: linear-gradient(180deg, #7BABD3 3%, #57BC6E 20%, #EADF45 40%, #F5833D 60%, #F25E5E 80%, black 94%); border-radius: 10px;">
+                    style="width: 265px; height: 580px; margin: 78px 172px; position: relative; background: linear-gradient(180deg, #7BABD3 0%, #57BC6E 20%, #EADF45 40%, #F5833D 60%, #F25E5E 80%, black 94%); border-radius: 10px;">
                 </div>
 
                 <!-- BMI Ranges -->
@@ -294,15 +285,8 @@
                 </div>
             </div>
 
-
-
             <x-footer />
         </div>
-
-
-        {{-- footer --}}
-
-
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 # Composer files - composer.lock dan vendor hanya dibutuhkan saat build
-composer.lock
+# composer.lock
 /vendor/
 
 # Node.js modules - untuk menghindari meng-copy folder node_modules lokal ke dalam image
