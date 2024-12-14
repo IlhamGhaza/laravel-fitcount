@@ -83,7 +83,7 @@ class UserController extends Controller
 
         User::where('id', $user->id)->update($updateData);
 
-        return redirect()->route('users.edit')->with('success', 'Profile updated successfully');
+        return redirect()->route('account')->with('success', 'Profile updated successfully');
     }
 
 

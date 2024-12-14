@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('bmi_records', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('bmi_score', 5, 2);
-            $table->string('bmi_category');
+            $table->decimal('bmi_score', 5, 2)->nullable(false);
+            $table->string('bmi_category')->nullable(false);
             $table->timestamps();
             $table->softDeletes();
         });

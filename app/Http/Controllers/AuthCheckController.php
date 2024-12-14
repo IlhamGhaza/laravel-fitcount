@@ -14,4 +14,11 @@ class AuthCheckController extends Controller
         }
         return redirect()->route('login')->with('error', 'Please login to continue.');
     }
+    public function checkAuth2()
+    {
+        if (Auth::check()) {
+            return back()->with('success', 'Welcome back!');
+        }
+        return redirect()->route('login')->with('error', 'Please login to continue.');
+    }
 }
