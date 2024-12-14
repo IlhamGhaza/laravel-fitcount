@@ -89,7 +89,6 @@
         </div>
 
         <!-- BMI Calculator Form -->
-        <!-- BMI Calculator Form -->
         <div id="bmi-section" class="Frame7 mx-auto my-16 bg-[#385723] rounded-3xl p-8 max-w-4xl">
             <h2 class="text-4xl font-bold text-[#FFF6CB] text-center mb-8">Hitung BMI Anda</h2>
             <form action="{{ route('bmi.calculate') }}" method="POST" class="space-y-6">
@@ -235,7 +234,7 @@
                 <!-- Feature Cards -->
                 <div class="p-8 bg-white rounded-lg shadow-lg Frame21">
                     <div class="mb-8">
-                        <img src="{{ asset('images/vektor1.svg') }}" alt="Notes" class="w-16 h-16">
+                        <img src="{{ asset('images/vektor1.svg') }}" alt="Notes" class="w-16 h-16 mx-auto">
                     </div>
                     <h3 class="text-2xl font-semibold text-[#385723] mb-4">Pencatatan Hasil BMI</h3>
                     <p class="text-[#385723] mb-8">Catat hasil BMI kamu secara rutin untuk melihat perkembanganmu</p>
@@ -247,7 +246,7 @@
 
                 <div class="p-8 bg-white rounded-lg shadow-lg Frame26">
                     <div class="mb-8">
-                        <img src="{{ asset('images/vektor2.svg') }}" alt="News" class="w-16 h-16">
+                        <img src="{{ asset('images/vektor2.svg') }}" alt="News" class="w-16 h-16 mx-auto">
                     </div>
                     <h3 class="text-2xl font-semibold text-[#385723] mb-4">Berita Secara Real-Time</h3>
                     <p class="text-[#385723] mb-8">Mendapat informasi trending secara realtime terkait dunia kesehatan
@@ -260,7 +259,7 @@
 
                 <div class="p-8 bg-white rounded-lg shadow-lg Frame27">
                     <div class="mb-8">
-                        <img src="{{ asset('images/vektor2.svg') }}" alt="Todo" class="w-16 h-16">
+                        <img src="{{ asset('images/vektor2.svg') }}" alt="Todo" class="w-16 h-16 mx-auto">
                     </div>
                     <h3 class="text-2xl font-semibold text-[#385723] mb-4">To Do List Harian</h3>
                     <p class="text-[#385723] mb-8">Mencatat tugas harian untuk mendukung produktifitas kamu menjalani
