@@ -1,44 +1,54 @@
-# Dependencies
-/node_modules
-/vendor
+# Composer files - composer.lock dan vendor hanya dibutuhkan saat build
+composer.lock
+/vendor/
 
-# Environment files
-.env
-.env.*
+# Node.js modules - untuk menghindari meng-copy folder node_modules lokal ke dalam image
+node_modules/
 
-# Development files
+# Laravel 10 & 11 files
+/storage/*
+/.env
+/public/storage
+
+# Laravel config cache
+/bootstrap/cache/*
+
+# IDE config dan file sementara
+.idea
+.vscode
+*.sublime-workspace
+*.sublime-project
+
+# File log
+*.log
+
+# File backup dan file sementara lainnya
+*.bak
+*.swp
+*~
+.DS_Store
+
+# Cache dan cache Laravel
+/.cache
+/.phpunit
+/.pids
+
+# File konfigurasi database yang tidak perlu (seperti .env.testing)
+.env.testing
+
+# Direktori temporary build untuk Vite
+/public/build
+/public/hot
+
+# Ignore .git dan file terkait version control
 .git
 .gitignore
 .gitattributes
-.editorconfig
-.idea
-.vscode
-*.sublime-project
-*.sublime-workspace
 
-# Storage and cache
-/storage/framework/cache/*
-/storage/framework/sessions/*
-/storage/framework/views/*
-/storage/logs/*
-/bootstrap/cache/*
+# Ignore Dockerfile dan docker-compose.yml jika Anda tidak ingin memasukkan file konfigurasi Docker
+Dockerfile
+docker-compose.yml
 
-# Testing
-/tests
-phpunit.xml
-.phpunit.result.cache
-
-# Build assets
-/public/hot
-/public/storage
-/public/build
-
-# Documentation
-README.md
-CHANGELOG.md
-CONTRIBUTING.md
-LICENSE
-
-# Misc
-.DS_Store
-Thumbs.db
+# Ignore image container yang sudah dibangun
+*.tar
+*.img

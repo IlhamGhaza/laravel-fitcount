@@ -1,52 +1,49 @@
+# Base image
 FROM php:8.3-fpm-alpine
 
-WORKDIR /var/www/html
-
+# Install dependencies
 RUN apk add --no-cache \
-    nginx \
-    git \
-    curl \
-    zip \
-    unzip \
-    mysql-client \
-    icu-dev \
+    bash \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    libwebp-dev \
+    libxpm-dev \
     libxml2-dev \
-    oniguruma-dev \
-    libzip-dev \
-    tzdata \
+    git \
     nodejs \
-    npm && \
-    docker-php-ext-install \
-    intl \
-    pdo \
-    pdo_mysql \
-    mbstring \
-    tokenizer \
-    xml \
-    bcmath \
-    zip && \
-    docker-php-ext-enable intl
+    npm \
+    bash \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
+    && docker-php-ext-install gd pdo pdo_mysql \
+    && npm install -g npm@latest \
+    && npm install -g vite
 
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
+# Set working directory
+WORKDIR /var/www
 
+# Copy composer.lock and composer.json
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-COPY package*.json ./
-RUN npm ci
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install PHP dependencies via Composer
+RUN composer install --no-autoloader --no-scripts
+
+# Copy the rest of the application code
 COPY . .
+
+# Install Node.js dependencies (for Vite)
+RUN npm install
+
+# Build assets with Vite
 RUN npm run build
 
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www
 
-RUN php artisan storage:link
+# Expose PHP-FPM port
+EXPOSE 9000
 
-COPY docker/nginx.conf /etc/nginx/http.d/default.conf
-COPY docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-EXPOSE 80
-
-ENTRYPOINT ["/entrypoint.sh"]
+# Run the application
+CMD ["php-fpm"]

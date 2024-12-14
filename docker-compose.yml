@@ -1,27 +1,26 @@
-version: '3'
+version: '3.8'
+
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: laravel-fitcount-app
     restart: unless-stopped
+    environment:
+      - APP_ENV=production
+      - APP_KEY=${APP_KEY}
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     volumes:
-      - .:/var/www/html
-      - /var/www/html/vendor
-      - /var/www/html/node_modules
-      - ./storage/app/public:/var/www/html/public/storage
-    ports:
-      - "80:80"
+      - .:/var/www
     networks:
-      - fitcount-network
+      - app-network
     depends_on:
       - db
-    environment:
-      DB_HOST: db
-      DB_DATABASE: ${DB_DATABASE}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
+    expose:
+      - "9000"  # Expose port 9000 untuk komunikasi dengan nginx, di dalam Docker
 
   db:
     image: mariadb:10.11-alpine
@@ -33,15 +32,14 @@ services:
       MARIADB_USER: ${DB_USERNAME}
       MARIADB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - dbdata:/var/lib/mysql
-    ports:
-      - "3306:3306"
+      - db_data:/var/lib/mysql
     networks:
-      - fitcount-network
+      - app-network
 
 networks:
-  fitcount-network:
+  app-network:
     driver: bridge
 
 volumes:
-  dbdata:
+  db_data:
+    driver: local
