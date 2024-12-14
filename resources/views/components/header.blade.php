@@ -58,13 +58,11 @@
                 </svg>
             @endauth
         </div>
-
     </a>
 
-
     <!-- Mobile Hamburger Icon -->
-    <div
-        style="display: none; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer; @media (max-width: 1024px) { display: block; }">
+    <div id="hamburger-container"
+        style="display: none; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer;">
         <button id="hamburger" style="background: none; border: none; padding: 10px;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -80,9 +78,9 @@
         style="display: none; position: absolute; top: 79px; left: 0; width: 100%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000;">
         <a href="{{ route('home') }}"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #eee;">Utama</a>
-        <a href="{{ route('home') }}"
+        <a href="{{ route('home') }}#bmi-section"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #eee;">Hitung</a>
-        <a href="{{ route('home') }}"
+        <a href="{{ route('home') }}#tentang.section"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif; border-bottom: 1px solid #eee;">Tentang</a>
         <a href="{{ route('komunitas') }}"
             style="display: block; padding: 15px 20px; text-decoration: none; color: black; font-family: 'Poppins', sans-serif;">Komunitas</a>
@@ -92,16 +90,43 @@
 <script>
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerContainer = document.getElementById('hamburger-container');
 
-    hamburger.addEventListener('click', () => {
+    hamburger.addEventListener('click', function() {
         const currentDisplay = mobileMenu.style.display;
-        mobileMenu.style.display = currentDisplay === 'none' ? 'block' : 'none';
+        mobileMenu.style.display = currentDisplay === 'none' || currentDisplay === '' ? 'block' : 'none';
     });
 
-    // Handle responsive menu visibility on window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 1024) {
+    // Show hamburger on mobile and tablet, hide on desktop
+    function adjustNavbar() {
+        if (window.innerWidth <= 1024) {
+            document.querySelector('.menu-container').style.display = 'none';
+            hamburgerContainer.style.display = 'block';
+        } else {
+            document.querySelector('.menu-container').style.display = 'flex';
+            hamburgerContainer.style.display = 'none';
             mobileMenu.style.display = 'none';
         }
+    }
+
+    // Add padding between avatar and hamburger for mobile/tablet
+    function adjustMobileSpacing() {
+        if (window.innerWidth <= 1024) {
+            document.querySelector('.Ellipse1').style.marginRight = '40px';
+            document.querySelector('#hamburger-container').style.marginLeft = '5px';
+        } else {
+            document.querySelector('.Ellipse1').style.marginRight = '0';
+        }
+    }
+
+
+    // Run on page load and window resize
+    window.addEventListener('load', function() {
+        adjustNavbar();
+        adjustMobileSpacing();
+    });
+    window.addEventListener('resize', function() {
+        adjustNavbar();
+        adjustMobileSpacing();
     });
 </script>
