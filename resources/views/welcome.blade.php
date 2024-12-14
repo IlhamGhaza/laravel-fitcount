@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        html{
+        html {
             scroll-behavior: smooth;
         }
     </style>
@@ -89,34 +89,46 @@
         </div>
 
         <!-- BMI Calculator Form -->
+        <!-- BMI Calculator Form -->
         <div id="bmi-section" class="Frame7 mx-auto my-16 bg-[#385723] rounded-3xl p-8 max-w-4xl">
             <h2 class="text-4xl font-bold text-[#FFF6CB] text-center mb-8">Hitung BMI Anda</h2>
             <form action="{{ route('bmi.calculate') }}" method="POST" class="space-y-6">
                 @csrf
+
                 <!-- Activity Level -->
                 <div>
-                    <select name="activity_level" class="w-full bg-[#FEFAE0] rounded-lg p-4">
+                    <select name="activity_level" required class="w-full bg-[#FEFAE0] rounded-lg p-4">
                         <option value="">Aktivitas fisik kamu termasuk yang mana?</option>
-                        <option value="low">Rendah</option>
-                        <option value="medium">Sedang</option>
-                        <option value="high">Tinggi</option>
+                        <option value="low" {{ old('activity_level') == 'low' ? 'selected' : '' }}>Rendah</option>
+                        <option value="medium" {{ old('activity_level') == 'medium' ? 'selected' : '' }}>Sedang
+                        </option>
+                        <option value="high" {{ old('activity_level') == 'high' ? 'selected' : '' }}>Tinggi</option>
                     </select>
+                    @error('activity_level')
+                        <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Age and Gender -->
                 <div class="grid grid-cols-2 gap-6">
                     <div>
                         <label class="mb-2 text-xl text-white">Usia</label>
-                        <input type="number" name="age" class="w-full bg-[#FEFAE0] rounded-lg p-4"
-                            placeholder="Usia kamu berapa?">
+                        <input type="number" name="age" value="{{ old('age') }}" required
+                            class="w-full bg-[#FEFAE0] rounded-lg p-4" placeholder="Usia kamu berapa?">
+                        @error('age')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
                         <label class="mb-2 text-xl text-white">Gender</label>
-                        <select name="gender" class="w-full bg-[#FEFAE0] rounded-lg p-4">
+                        <select name="gender" required class="w-full bg-[#FEFAE0] rounded-lg p-4">
                             <option value="">Gender Kamu</option>
-                            <option value="male">Laki-laki</option>
-                            <option value="female">Perempuan</option>
+                            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Perempuan</option>
                         </select>
+                        @error('gender')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
 
@@ -125,18 +137,24 @@
                     <div>
                         <label class="mb-2 text-xl text-white">Berat Badan</label>
                         <div class="flex">
-                            <input type="number" name="weight" class="flex-1 bg-[#FEFAE0] rounded-l-lg p-4"
-                                placeholder="Masukan berat badanmu ya">
+                            <input type="number" name="weight" value="{{ old('weight') }}" required
+                                class="flex-1 bg-[#FEFAE0] rounded-l-lg p-4" placeholder="Masukan berat badanmu ya">
                             <span class="bg-[#FEFAE0] p-4 rounded-r-lg font-bold">Kg</span>
                         </div>
+                        @error('weight')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
                         <label class="mb-2 text-xl text-white">Tinggi Badan</label>
                         <div class="flex">
-                            <input type="number" name="height" class="flex-1 bg-[#FEFAE0] rounded-l-lg p-4"
-                                placeholder="Masukan tinggi badanmu ya">
+                            <input type="number" name="height" value="{{ old('height') }}" required
+                                class="flex-1 bg-[#FEFAE0] rounded-l-lg p-4" placeholder="Masukan tinggi badanmu ya">
                             <span class="bg-[#FEFAE0] p-4 rounded-r-lg font-bold">CM</span>
                         </div>
+                        @error('height')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
 
@@ -146,6 +164,7 @@
                 </button>
             </form>
         </div>
+
 
         <!-- BMI Section -->
         <div id="tentang.section" class="relative w-full bg-[#001910] py-16">
