@@ -204,25 +204,50 @@
             <p class="mb-12 text-center">
                 Temukan berita terkini secara realtime untuk mendukung pengetahuanmu
             </p>
-
             <!-- Trending Articles Carousel -->
-            <div class="flex gap-6 px-6 overflow-x-auto Group790">
+            <div class="flex gap-8 px-8 pb-12 overflow-x-auto Group790">
                 <!-- Article cards -->
-                @for ($i = 1; $i <= 3; $i++)
-                    <div class="Frame20 flex-none w-[1010px] bg-[#F9EDB2] rounded-[40px] overflow-hidden shadow-lg">
-                        <div class="relative h-[350px]">
-                            <img src="{{ asset('images/image5-' . $i . '.svg') }}" alt="Article {{ $i }}"
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="p-6 bg-white">
-                            <h3 class="mb-4 text-2xl font-medium">
-                                Kurangnya Aktivitas fisik menjadi pemicu utama obesitas dikalangan remaja
-                            </h3>
-                            <span class="text-[#C5C4C4] font-bold">nationalgeographic.grid.id</span>
+                @foreach ($articles as $article)
+                    <div class="flex-none w-[400px] transform transition-all duration-500 hover:scale-[1.03]">
+                        <div
+                            class="bg-[#F9EDB2] rounded-3xl overflow-hidden shadow-xl border-2 border-[#D4F3B7] h-full flex flex-col">
+                            <div class="relative h-[250px] group">
+                                <!-- News Image with overlay -->
+                                <img src="{{ $article['urlToImage'] ?? asset('images/default-image.svg') }}"
+                                    alt="{{ $article['title'] }}"
+                                    class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#001910]/80 to-transparent"></div>
+
+                                <!-- Source Badge - Positioned at top -->
+                                <span
+                                    class="absolute top-4 right-4 px-4 py-2 text-sm font-bold text-[#001910] bg-[#D4F3B7]/90 backdrop-blur-sm rounded-full">
+                                    {{ $article['source']['name'] ?? 'Unknown Source' }}
+                                </span>
+                            </div>
+
+                            <div class="flex flex-col justify-between flex-grow p-6 bg-white/95 backdrop-blur-sm">
+                                <!-- News Title -->
+                                <h3
+                                    class="mb-4 text-xl font-semibold text-[#001910] line-clamp-2 hover:line-clamp-none transition-all duration-300">
+                                    {{ $article['title'] }}
+                                </h3>
+
+                                <!-- Bottom Section with Date and Read More -->
+                                <div class="flex items-center justify-between mt-4">
+                                    <time class="text-sm font-medium text-[#94AB71]">
+                                        {{ \Carbon\Carbon::parse($article['publishedAt'])->format('d M Y') }}
+                                    </time>
+                                    <a href="{{ $article['url'] }}" target="_blank"
+                                        class="inline-flex items-center px-4 py-2 text-sm font-bold text-[#001910] bg-[#D4F3B7] rounded-full hover:bg-[#BBE67A] transition-colors duration-300">
+                                        Read More →
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
+
         </div>
 
 
