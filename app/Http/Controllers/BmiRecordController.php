@@ -10,24 +10,31 @@ use Illuminate\Support\Facades\DB;
 class BmiRecordController extends Controller
 {
     // Method to display the BMI form
-    public function showForm()
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-        $userData = null;
+    // public function showForm()
+    // {
+    //     $user = Auth::user(); // Get the currently logged-in user
+    //     $userData = null;
 
-        // If the user is logged in, fetch data from the database
-        if ($user) {
-            $userData = [
-                'gender' => $user->gender,
-                'age' => $user->age,
-                'height' => $user->height,
-                'weight' => $user->weight,
-            ];
-        }
+    //     // If the user is logged in, fetch data from the database
+    //     if ($user) {
+    //         $userData = [
+    //             'gender' => $user->gender,
+    //             'age' => $user->age,
+    //             'height' => $user->height,
+    //             'weight' => $user->weight,
+    //         ];
+    //     }
 
-        // Send user data to the view for auto-filling the form to home section #bmi section
-        return view('home', compact('userData'));
-    }
+    //     // Send user data to the view for auto-filling the form to home section #bmi section
+    //     return redirect()->route('home')
+    //     ->with([
+    //         'prefill_height' => Auth::user()->height,
+    //         'prefill_weight' => Auth::user()->weight,
+    //         'prefill_age' => Auth::user()->age
+    //     ])
+    //     ->fragment('bmi-section');
+
+    // }
 
     // Method to calculate BMI
     public function calculate(Request $request)

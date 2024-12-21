@@ -11,36 +11,36 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body style="background-color: white; min-height: 100vh;">
+<body class="bg-white min-h-screen">
     <x-header />
 
-    <div style="padding: 48px 16px; max-width: 80rem; margin: 0 auto;">
+    <div class="px-4 md:px-12 py-8 md:py-12 max-w-7xl mx-auto">
         <!-- Profile Card -->
-        <div style="background-color: #385723; border-radius: 50px; padding: 32px; position: relative; overflow: hidden;">
+        <div class="bg-[#385723] rounded-[50px] p-4 md:p-8 relative overflow-hidden">
             <a href="{{ route('account') }}">
-                <div style="position: absolute; inset: 0; opacity: 0.05;">
-                    <img src="{{ asset('images/image12.svg') }}" alt="Pattern" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="absolute inset-0 opacity-5">
+                    <img src="{{ asset('images/image12.svg') }}" alt="Pattern" class="w-full h-full object-cover">
                 </div>
 
-                <div style="position: relative; z-index: 10; display: flex; align-items: center; gap: 32px;">
-                    <div style="width: 183px; height: 183px;">
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                    <div class="w-32 h-32 md:w-[183px] md:h-[183px]">
                         @if (Auth::user()->avatar)
-                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%;">
+                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile" class="w-full h-full rounded-full">
                         @else
-                            <div style="width: 100%; height: 100%; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 60%; height: 60%; color: white;">
+                            <div class="w-full h-full bg-gray-300 rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-3/5 h-3/5 text-white">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
                         @endif
                     </div>
 
-                    <div style="color: white;">
-                        <div style="display: flex; align-items: center; gap: 16px;">
-                            <h1 style="font-size: 2.25rem; font-weight: 700;">{{ Auth::user()->name }}, </h1>
-                            <p style="font-size: 1.25rem; font-weight: 300;">{{ Auth::user()->age }} years old</p>
+                    <div class="text-white text-center md:text-left">
+                        <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+                            <h1 class="text-xl md:text-2xl lg:text-4xl font-bold">{{ Auth::user()->name }}, </h1>
+                            <p class="text-base md:text-lg lg:text-xl font-light">{{ Auth::user()->age }} years old</p>
                         </div>
-                        <p style="margin-top: 16px; font-size: 1.25rem; font-weight: 300;">
+                        <p class="mt-2 md:mt-4 text-sm md:text-base lg:text-xl font-light">
                             {{ Auth::user()->email }} - {{ Auth::user()->height }} cm, {{ Auth::user()->weight }} Kg
                         </p>
                     </div>
@@ -56,43 +56,43 @@
             </div>
 
             <!-- Filter Buttons -->
-            <div style="display: flex; justify-content: center; margin-top: 32px;">
-                <div style="background: #385723; border-radius: 15px; padding: 8px; display: flex; gap: 16px;">
-                    <button id="daily-btn" onclick="filterData('daily')" style="padding: 8px 32px; border-radius: 10px; background: #A5B987; color: white; font-weight: 600;">Hari</button>
-                    <button id="weekly-btn" onclick="filterData('weekly')" style="padding: 8px 32px; border-radius: 10px; background: #A5B987; color: white; font-weight: 600;">Minggu</button>
-                    <button id="monthly-btn" onclick="filterData('monthly')" style="padding: 8px 32px; border-radius: 10px; background: #A5B987; color: white; font-weight: 600;">Bulan</button>
-                    <button id="yearly-btn" onclick="filterData('yearly')" style="padding: 8px 32px; border-radius: 10px; background: white; color: black; font-weight: 600;">Tahun</button>
+            <div class="flex justify-center mt-6 md:mt-8">
+                <div class="bg-[#385723] rounded-xl p-2 flex flex-wrap md:flex-nowrap gap-2 md:gap-4">
+                    <button id="daily-btn" onclick="filterData('daily')" class="px-4 md:px-8 py-2 rounded-lg bg-[#A5B987] text-white font-semibold text-sm md:text-base">Hari</button>
+                    <button id="weekly-btn" onclick="filterData('weekly')" class="px-4 md:px-8 py-2 rounded-lg bg-[#A5B987] text-white font-semibold text-sm md:text-base">Minggu</button>
+                    <button id="monthly-btn" onclick="filterData('monthly')" class="px-4 md:px-8 py-2 rounded-lg bg-[#A5B987] text-white font-semibold text-sm md:text-base">Bulan</button>
+                    <button id="yearly-btn" onclick="filterData('yearly')" class="px-4 md:px-8 py-2 rounded-lg bg-white text-black font-semibold text-sm md:text-base">Tahun</button>
                 </div>
             </div>
 
             <!-- Graph Container -->
-            <div style="margin: 32px auto; height: 350px; position: relative; max-width: 800px;">
-                <!-- BMI Details Popup -->
-                <div id="bmi-details" style="display: none; position: absolute; top: -40px; left: 50%; transform: translateX(-50%); background: #385723; color: white; padding: 8px 16px; border-radius: 10px; text-align: center; z-index: 10; transition: all 0.3s ease;">
-                    <p style="font-size: 0.9rem; font-weight: 500; margin: 0;">
+            <div class="mt-6 md:mt-8 h-[250px] md:h-[350px] relative max-w-[800px] mx-auto">
+                <div id="bmi-details" class="hidden absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#385723] text-white px-4 py-2 rounded-lg text-center z-10 transition-all duration-300">
+                    <p class="text-xs md:text-sm font-medium m-0">
                         Score: <span id="bmi-score"></span> | Category: <span id="bmi-category"></span>
                     </p>
                 </div>
 
-                <div id="bmi-graph" style="display: flex; align-items: flex-end; justify-content: center; gap: 20px; height: 100%; padding: 0 48px;">
+                <div id="bmi-graph" class="flex items-end justify-center gap-3 md:gap-5 h-full px-2 md:px-12">
                     @foreach ($bmiRecords as $record)
                         <div class="bmi-bar" onclick="showBmiDetails(this)"
                              data-score="{{ $record->bmi_score }}"
                              data-category="{{ $record->bmi_category }}"
-                             style="display: flex; flex-direction: column; align-items: center; cursor: pointer; height: {{ min($record->bmi_score * 3, 300) }}px;">
-                            <div style="width: 20px; background: #385723; border-radius: 10px; height: 100%;"></div>
-                            <span style="margin-top: 4px; font-size: 0.75rem;">{{ $record->created_at->format('M d') }}</span>
+                             style="height: {{ min($record->bmi_score * 3, 300) }}px;"
+                             class="flex flex-col items-center cursor-pointer">
+                            <div class="w-3 md:w-5 bg-[#385723] rounded-lg h-full"></div>
+                            <span class="mt-1 text-[10px] md:text-xs">{{ $record->created_at->format('M d') }}</span>
                         </div>
                     @endforeach
                 </div>
             </div>
 
             <!-- Action Buttons -->
-            <div style="display: flex; justify-content: center; gap: 32px; margin-top: 32px;">
-                <a href="{{ route('home') }}#bmi-section" style="padding: 16px 48px; border: 1px solid black; border-radius: 10px; font-weight: 600; font-size: 1.25rem;">
+            <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-6 md:mt-8">
+                <a href="{{ route('home') }}#bmi-section" class="px-6 md:px-12 py-3 md:py-4 border border-black rounded-lg font-semibold text-base md:text-xl text-center">
                     Hitung Lagi
                 </a>
-                <a href="{{ route('home') }}#bmi-section" style="padding: 16px 48px; background: #94AB71; border: 1px solid #F9EDB2; border-radius: 10px; color: white; font-weight: 600; font-size: 1.25rem;">
+                <a href="{{ route('home') }}#bmi-section" class="px-6 md:px-12 py-3 md:py-4 bg-[#94AB71] border border-[#F9EDB2] rounded-lg text-white font-semibold text-base md:text-xl text-center">
                     Tambah Data
                 </a>
             </div>
@@ -102,6 +102,7 @@
     <x-footer />
 
     <script>
+        // Keep the existing JavaScript code unchanged
         let activeButton = 'yearly';
         let currentTimeout;
 
@@ -134,31 +135,17 @@
 
             records.forEach(record => {
                 const bar = document.createElement('div');
-                bar.className = 'bmi-bar';
-                bar.style.cssText = `
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    cursor: pointer;
-                    height: ${Math.min(record.bmi_score * 3, 300)}px;
-                `;
+                bar.className = 'bmi-bar flex flex-col items-center cursor-pointer';
+                bar.style.height = `${Math.min(record.bmi_score * 3, 300)}px`;
                 bar.setAttribute('data-score', record.bmi_score);
                 bar.setAttribute('data-category', record.bmi_category);
                 bar.onclick = () => showBmiDetails(bar);
 
                 const barDiv = document.createElement('div');
-                barDiv.style.cssText = `
-                    width: 20px;
-                    background: #385723;
-                    border-radius: 10px;
-                    height: 100%;
-                `;
+                barDiv.className = 'w-3 md:w-5 bg-[#385723] rounded-lg h-full';
 
                 const dateSpan = document.createElement('span');
-                dateSpan.style.cssText = `
-                    margin-top: 4px;
-                    font-size: 0.75rem;
-                `;
+                dateSpan.className = 'mt-1 text-[10px] md:text-xs';
                 dateSpan.textContent = new Date(record.created_at).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric'

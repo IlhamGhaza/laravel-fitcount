@@ -20,6 +20,7 @@ return new class extends Migration
             //image
             $table->string('avatar')->nullable();
             $table->integer('age')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->decimal('height', 5, 2)->nullable();
             $table->decimal('weight', 5, 2)->nullable();
             $table->rememberToken();

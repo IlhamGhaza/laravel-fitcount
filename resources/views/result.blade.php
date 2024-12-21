@@ -176,7 +176,7 @@
 
             <!-- Action Buttons -->
             <div style="display: flex; justify-content: center; gap: 20px; margin-top: 40px;">
-                <button onclick="window.location.href='{{ route('bmi.form') }}'"
+                <button onclick="window.location.href='{{ route('home') }}#bmi-section'"
                     style="padding: 12px 30px; background: #BBE67A; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer;">
                     Ulangi Perhitungan
                 </button>

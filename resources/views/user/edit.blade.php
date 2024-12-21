@@ -23,7 +23,8 @@
             <div class="bg-[#385723] rounded-[50px] shadow-lg p-8">
                 <h2 class="mb-8 text-4xl font-bold text-white">Edit Profile</h2>
 
-                <form action="{{ route('users.update', Auth::user()->id) }}" method="POST" class="space-y-6" enctype="multipart/form-data">
+                <form action="{{ route('users.update', Auth::user()->id) }}" method="POST" class="space-y-6"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -41,6 +42,17 @@
                         </div>
 
                         <div>
+                            <label for="gender" class="block mb-2 text-xl text-white">Gender</label>
+                            <select name="gender" id="gender"
+                                class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
+                                <option value="male" {{ Auth::user()->gender == 'male' ? 'selected' : '' }}>Male
+                                </option>
+                                <option value="female" {{ Auth::user()->gender == 'female' ? 'selected' : '' }}>Female
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
                             <label for="age" class="block mb-2 text-xl text-white">Age</label>
                             <input type="number" name="age" id="age" value="{{ Auth::user()->age }}"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
@@ -48,13 +60,15 @@
 
                         <div>
                             <label for="height" class="block mb-2 text-xl text-white">Height (cm)</label>
-                            <input type="number" step="0.01" name="height" id="height" value="{{ Auth::user()->height }}"
+                            <input type="number" step="0.01" name="height" id="height"
+                                value="{{ Auth::user()->height }}"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
                         </div>
 
                         <div>
                             <label for="weight" class="block mb-2 text-xl text-white">Weight (kg)</label>
-                            <input type="number" step="0.01" name="weight" id="weight" value="{{ Auth::user()->weight }}"
+                            <input type="number" step="0.01" name="weight" id="weight"
+                                value="{{ Auth::user()->weight }}"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
                         </div>
 
@@ -63,23 +77,30 @@
                             <input type="file" name="avatar" id="avatar" accept="image/*"
                                 class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white file:mr-4 file:py-2 file:px-4 file:rounded-[30px] file:border-0 file:bg-[#BBE67A] file:text-[#385723]">
                         </div>
+                    </div>
 
-                        <div>
-                            <label for="password" class="block mb-2 text-xl text-white">New Password</label>
-                            <input type="password" name="password" id="password"
-                                class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
-                        </div>
+                    <!-- Separated Password Section -->
+                    <div class="mt-8 p-6 bg-white/10 rounded-[20px] border-2 border-white">
+                        <h3 class="text-2xl font-bold text-white mb-4">Change Password</h3>
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            <div>
+                                <label for="password" class="block mb-2 text-xl text-white">New Password</label>
+                                <input type="password" name="password" id="password"
+                                    class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
+                            </div>
 
-                        <div>
-                            <label for="password_confirmation" class="block mb-2 text-xl text-white">Confirm Password</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation"
-                                class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
+                            <div>
+                                <label for="password_confirmation" class="block mb-2 text-xl text-white">Confirm
+                                    Password</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    class="w-full h-[63px] bg-white/20 border-2 border-white rounded-[7px] px-4 text-white placeholder-[#C7C7C7] backdrop-blur-[20px]">
+                            </div>
                         </div>
                     </div>
 
+
                     <div class="flex justify-center mt-8">
-                        <button type="submit"
-                            class="w-[238px] h-[44px] bg-[#BBE67A] rounded-[30px]">
+                        <button type="submit" class="w-[238px] h-[44px] bg-[#BBE67A] rounded-[30px]">
                             <span class="text-[20px] font-medium text-[#385723] font-poppins">Update Profile</span>
                         </button>
                     </div>
@@ -90,4 +111,5 @@
 
     <x-footer />
 </body>
+
 </html>

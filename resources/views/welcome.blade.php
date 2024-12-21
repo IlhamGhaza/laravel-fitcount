@@ -89,14 +89,16 @@
         </div>
 
         <!-- BMI Calculator Form -->
-        <div id="bmi-section" class="Frame7 mx-auto my-16 bg-[#385723] rounded-3xl p-8 max-w-4xl">
-            <h2 class="text-4xl font-bold text-[#FFF6CB] text-center mb-8">Hitung BMI Anda</h2>
-            <form action="{{ route('bmi.calculate') }}" method="POST" class="space-y-6">
+        <div id="bmi-section"
+            class="Frame7 mx-auto my-8 md:my-16 bg-[#385723] rounded-3xl p-4 md:p-8 max-w-4xl mx-4 md:mx-auto">
+            <h2 class="text-2xl md:text-4xl font-bold text-[#FFF6CB] text-center mb-4 md:mb-8">Hitung BMI Anda</h2>
+            <form action="{{ route('bmi.calculate') }}" method="POST" class="space-y-4 md:space-y-6">
                 @csrf
 
                 <!-- Activity Level -->
                 <div>
-                    <select name="activity_level" required class="w-full bg-[#FEFAE0] rounded-lg p-4">
+                    <select name="activity_level" required
+                        class="w-full bg-[#FEFAE0] rounded-lg p-3 md:p-4 text-sm md:text-base">
                         <option value="">Aktivitas fisik kamu termasuk yang mana?</option>
                         <option value="low" {{ old('activity_level') == 'low' ? 'selected' : '' }}>Rendah</option>
                         <option value="medium" {{ old('activity_level') == 'medium' ? 'selected' : '' }}>Sedang
@@ -109,22 +111,31 @@
                 </div>
 
                 <!-- Age and Gender -->
-                <div class="grid grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
-                        <label class="mb-2 text-xl text-white">Usia</label>
-                        <input type="number" name="age" value="{{ old('age') }}" required
-                            class="w-full bg-[#FEFAE0] rounded-lg p-4" placeholder="Usia kamu berapa?">
+                        <label class="mb-2 text-lg md:text-xl text-white">Usia</label>
+                        <input type="number" name="age"
+                            value="{{ Auth::check() ? Auth::user()->age : old('age') }}" required
+                            class="w-full bg-[#FEFAE0] rounded-lg p-3 md:p-4 text-sm md:text-base"
+                            placeholder="Usia kamu berapa?">
                         @error('age')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
+
                     <div>
-                        <label class="mb-2 text-xl text-white">Gender</label>
-                        <select name="gender" required class="w-full bg-[#FEFAE0] rounded-lg p-4">
-                            <option value="">Gender Kamu</option>
-                            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Perempuan</option>
+                        <label class="mb-2 text-lg md:text-xl text-white">Gender</label>
+                        <select name="gender" required
+                            class="w-full bg-[#FEFAE0] rounded-lg p-3 md:p-4 text-sm md:text-base">
+                            <option value="" disabled {{ !Auth::user()->gender ? 'selected' : '' }}>Gender Kamu
+                            </option>
+                            <option value="male" {{ Auth::user()->gender == 'male' ? 'selected' : '' }}>Laki-laki
+                            </option>
+                            <option value="female" {{ Auth::user()->gender == 'female' ? 'selected' : '' }}>Perempuan
+                            </option>
                         </select>
+
+
                         @error('gender')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -132,24 +143,30 @@
                 </div>
 
                 <!-- Weight and Height -->
-                <div class="grid grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
-                        <label class="mb-2 text-xl text-white">Berat Badan</label>
+                        <label class="mb-2 text-lg md:text-xl text-white">Berat Badan</label>
                         <div class="flex">
-                            <input type="number" name="weight" value="{{ old('weight') }}" required
-                                class="flex-1 bg-[#FEFAE0] rounded-l-lg p-4" placeholder="Masukan berat badanmu ya">
-                            <span class="bg-[#FEFAE0] p-4 rounded-r-lg font-bold">Kg</span>
+                            <input type="number" name="weight"
+                                value="{{ Auth::check() ? Auth::user()->weight : old('weight') }}" step="1"
+                                min="1" max="500" required
+                                class="flex-1 bg-[#FEFAE0] rounded-l-lg p-3 md:p-4 text-sm md:text-base"
+                                placeholder="Masukan berat badanmu ya">
+
+                            <span class="bg-[#FEFAE0] p-3 md:p-4 rounded-r-lg font-bold text-sm md:text-base">Kg</span>
                         </div>
                         @error('weight')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div>
-                        <label class="mb-2 text-xl text-white">Tinggi Badan</label>
+                        <label class="mb-2 text-lg md:text-xl text-white">Tinggi Badan</label>
                         <div class="flex">
-                            <input type="number" name="height" value="{{ old('height') }}" required
-                                class="flex-1 bg-[#FEFAE0] rounded-l-lg p-4" placeholder="Masukan tinggi badanmu ya">
-                            <span class="bg-[#FEFAE0] p-4 rounded-r-lg font-bold">CM</span>
+                            <input type="number" name="height"
+                                value="{{ Auth::check() ? Auth::user()->height : old('height') }}" required
+                                class="flex-1 bg-[#FEFAE0] rounded-l-lg p-3 md:p-4 text-sm md:text-base"
+                                placeholder="Masukan tinggi badanmu ya">
+                            <span class="bg-[#FEFAE0] p-3 md:p-4 rounded-r-lg font-bold text-sm md:text-base">CM</span>
                         </div>
                         @error('height')
                             <span class="text-sm text-red-500">{{ $message }}</span>
@@ -158,45 +175,46 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full max-w-md mx-auto block bg-[rgba(254,250,224,0.15)] border-4 border-[#D4F3B7] text-[#F9EDB2] text-3xl font-semibold py-4 rounded-2xl mt-8">
+                    class="w-full max-w-md mx-auto block bg-[rgba(254,250,224,0.15)] border-2 md:border-4 border-[#D4F3B7] text-[#F9EDB2] text-xl md:text-3xl font-semibold py-3 md:py-4 rounded-xl md:rounded-2xl mt-6 md:mt-8">
                     Hitung
                 </button>
             </form>
         </div>
-
+        {{-- End of Form --}}
 
         <!-- BMI Section -->
-        <div id="tentang.section" class="relative w-full bg-[#001910] py-16">
-
+        <div id="tentang.section" class="relative w-full bg-[#001910] py-8 md:py-16">
             <!-- Gradient Background -->
             <div class="absolute inset-0 bg-[#001910] opacity-90"></div>
 
-            <div class="container relative z-10 flex items-center mx-auto">
-                <!-- Left Section: Image -->
-                <div class="flex-1">
-                    <img src="{{ asset('images/image16.svg') }}" alt="BMI Illustration"
-                        class="w-full h-auto rounded-lg">
-                </div>
+            <div class="container relative z-10 px-4 mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <!-- Left Section: Image -->
+                    <div class="w-full md:w-1/2">
+                        <img src="{{ asset('images/image16.svg') }}" alt="BMI Illustration"
+                            class="w-full h-auto rounded-lg">
+                    </div>
 
-                <!-- Right Section: Text Content -->
-                <div class="flex-1 max-w-lg ml-12">
-                    <h2 class="mb-6 text-6xl font-bold leading-snug text-white">BMI itu apasih?</h2>
-                    <p class="mb-8 text-lg leading-relaxed text-white">
-                        The Body Mass Index (BMI) is a tool that is often used as a surrogate measure of body fat,
-                        and can screen for obesity and associated health risks. It can be calculated using a BMI
-                        calculator
-                        based on height and weight and results can be categorised into different classes, ranging from
-                        underweight through to obesity class III.
-                    </p>
-                    <a href="#bmi-section"
-                        class="inline-block bg-[#BBE67A] text-black text-lg font-bold px-6 py-3 rounded-md shadow-md">
-                        Hitung Sekarang >>
-                    </a>
+                    <!-- Right Section: Text Content -->
+                    <div class="w-full md:w-1/2 max-w-lg">
+                        <h2 class="mb-4 md:mb-6 text-4xl md:text-6xl font-bold leading-tight text-white">
+                            BMI itu apasih?
+                        </h2>
+                        <p class="mb-6 md:mb-8 text-base md:text-lg leading-relaxed text-white">
+                            The Body Mass Index (BMI) is a tool that is often used as a surrogate measure of body fat,
+                            and can screen for obesity and associated health risks. It can be calculated using a BMI
+                            calculator based on height and weight and results can be categorised into different classes,
+                            ranging from underweight through to obesity class III.
+                        </p>
+                        <a href="#bmi-section"
+                            class="inline-block bg-[#BBE67A] text-black text-base md:text-lg font-bold px-4 md:px-6 py-2 md:py-3 rounded-md shadow-md hover:bg-[#a5d95e] transition-colors">
+                            Hitung Sekarang >>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-
-
+        <!-- End of BMI Section -->
 
         <!-- Trending Section -->
         <div class="py-32">
@@ -247,55 +265,71 @@
                     </div>
                 @endforeach
             </div>
-
         </div>
 
 
 
         <!-- Features Section -->
         <div class="Frame25"
-            style="width: 100%; height: 500px; position: relative; background: rgba(148, 171, 113, 0.66)">
-            <div class="grid w-full grid-cols-3 gap-8 px-6 py-16">
+            style="width: 100%; height: auto; position: relative; background: rgba(148, 171, 113, 0.66); padding: 16px; box-sizing: border-box;">
+            <div class="grid w-full"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; padding: 16px; box-sizing: border-box;">
                 <!-- Feature Cards -->
-                <div class="p-8 bg-white rounded-lg shadow-lg Frame21">
-                    <div class="mb-8">
-                        <img src="{{ asset('images/vektor1.svg') }}" alt="Notes" class="w-16 h-16 mx-auto">
+                <div class="p-8 bg-white rounded-lg shadow-lg Frame21"
+                    style="padding: 16px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="mb-8" style="margin-bottom: 16px; text-align: center;">
+                        <img src="{{ asset('images/vektor1.svg') }}" alt="Notes"
+                            style="width: 64px; height: 64px; margin: 0 auto;">
                     </div>
-                    <h3 class="text-2xl font-semibold text-[#385723] mb-4">Pencatatan Hasil BMI</h3>
-                    <p class="text-[#385723] mb-8">Catat hasil BMI kamu secara rutin untuk melihat perkembanganmu</p>
+                    <h3
+                        style="font-size: 1.5rem; font-weight: 600; color: #385723; margin-bottom: 16px; text-align: center;">
+                        Pencatatan Hasil BMI</h3>
+                    <p style="color: #385723; margin-bottom: 16px; text-align: center;">Catat hasil BMI kamu secara
+                        rutin untuk melihat perkembanganmu</p>
                     <a href="{{ route('komunitas') }}"
-                        class="block bg-[#BBE67A] text-black font-bold px-6 py-3 rounded-lg text-center">
+                        style="display: block; background: #BBE67A; color: black; font-weight: bold; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none;">
                         Gabung Komunitas!
                     </a>
                 </div>
 
-                <div class="p-8 bg-white rounded-lg shadow-lg Frame26">
-                    <div class="mb-8">
-                        <img src="{{ asset('images/vektor2.svg') }}" alt="News" class="w-16 h-16 mx-auto">
+                <div class="p-8 bg-white rounded-lg shadow-lg Frame26"
+                    style="padding: 16px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="mb-8" style="margin-bottom: 16px; text-align: center;">
+                        <img src="{{ asset('images/vektor2.svg') }}" alt="News"
+                            style="width: 64px; height: 64px; margin: 0 auto;">
                     </div>
-                    <h3 class="text-2xl font-semibold text-[#385723] mb-4">Berita Secara Real-Time</h3>
-                    <p class="text-[#385723] mb-8">Mendapat informasi trending secara realtime terkait dunia kesehatan
-                    </p>
+                    <h3
+                        style="font-size: 1.5rem; font-weight: 600; color: #385723; margin-bottom: 16px; text-align: center;">
+                        Berita Secara Real-Time</h3>
+                    <p style="color: #385723; margin-bottom: 16px; text-align: center;">Mendapat informasi trending
+                        secara realtime terkait dunia kesehatan</p>
                     <a href="{{ route('komunitas') }}"
-                        class="block bg-[#BBE67A] text-black font-bold px-6 py-3 rounded-lg text-center">
+                        style="display: block; background: #BBE67A; color: black; font-weight: bold; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none;">
                         Gabung Komunitas!
                     </a>
                 </div>
 
-                <div class="p-8 bg-white rounded-lg shadow-lg Frame27">
-                    <div class="mb-8">
-                        <img src="{{ asset('images/vektor2.svg') }}" alt="Todo" class="w-16 h-16 mx-auto">
+                <div class="p-8 bg-white rounded-lg shadow-lg Frame27"
+                    style="padding: 16px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="mb-8" style="margin-bottom: 16px; text-align: center;">
+                        <img src="{{ asset('images/vektor2.svg') }}" alt="Todo"
+                            style="width: 64px; height: 64px; margin: 0 auto;">
                     </div>
-                    <h3 class="text-2xl font-semibold text-[#385723] mb-4">To Do List Harian</h3>
-                    <p class="text-[#385723] mb-8">Mencatat tugas harian untuk mendukung produktifitas kamu menjalani
-                        hari</p>
+                    <h3
+                        style="font-size: 1.5rem; font-weight: 600; color: #385723; margin-bottom: 16px; text-align: center;">
+                        To Do List Harian</h3>
+                    <p style="color: #385723; margin-bottom: 16px; text-align: center;">Mencatat tugas harian untuk
+                        mendukung produktifitas kamu menjalani hari</p>
                     <a href="{{ route('komunitas') }}"
-                        class="block bg-[#BBE67A] text-black font-bold px-6 py-3 rounded-lg text-center">
+                        style="display: block; background: #BBE67A; color: black; font-weight: bold; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none;">
                         Gabung Komunitas!
                     </a>
                 </div>
             </div>
         </div>
+        <!-- End of Features Section -->
+
+
     </div>
 
     <x-footer />
@@ -306,6 +340,31 @@
             setTimeout(() => el.style.display = 'none', 3000);
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Script Loaded");
+
+            @if (Auth::check() && Auth::user()->gender)
+                const userGender = @json(Auth::user()->gender);
+                console.log("User Gender:", userGender);
+
+                const genderSelect = document.querySelector('select[name="gender"]');
+                if (genderSelect) {
+                    setTimeout(() => {
+                        genderSelect.value = userGender;
+                        console.log("Dropdown updated to:", genderSelect.value);
+                    }, 0); // Delaying slightly in case the DOM updates asynchronously
+                } else {
+                    console.log("Dropdown element not found");
+                }
+            @else
+                console.log("User not authenticated or gender not set");
+            @endif
+        });
+    </script>
+
+
+
 </body>
 
 </html>
