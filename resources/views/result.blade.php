@@ -108,45 +108,54 @@
         document.addEventListener("DOMContentLoaded", function() {
             const bmiScore = {{ $bmiScore ?? 0 }};
             const indicator = document.getElementById("bmi-indicator");
-            const parameterContainer = document.querySelector(".Parameter");
+            const container = document.querySelector(
+            ".FrameBmiParameter"); // Ubah selector ini sesuai dengan container yang benar
+
+            if (!indicator || !container) {
+                console.error("Indicator or container not found");
+                return;
+            }
 
             const ranges = [{
                     min: 0,
                     max: 18.5,
                     position: 0
-                }, // Underweight: 0-16.66%
+                },
                 {
                     min: 18.5,
                     max: 24.9,
                     position: 16.66
-                }, // Normal: 16.66-33.32%
+                },
                 {
                     min: 25,
                     max: 29.9,
                     position: 33.32
-                }, // Overweight: 33.32-49.98%
+                },
                 {
                     min: 30,
                     max: 34.9,
                     position: 49.98
-                }, // Obese 1: 49.98-66.64%
+                },
                 {
                     min: 35,
                     max: 39.9,
                     position: 66.64
-                }, // Obese 2: 66.64-83.3%
+                },
                 {
                     min: 40,
                     max: 100,
                     position: 83.3
-                } // Obese 3: 83.3-100%
+                }
             ];
 
             const range = ranges.find((r) => bmiScore >= r.min && bmiScore <= r.max);
             if (range) {
-                const containerWidth = document.querySelector(".Rectangle2").offsetWidth;
+                const containerWidth = container.offsetWidth;
                 const position = (range.position * containerWidth) / 100;
                 indicator.style.left = `${position}px`;
+                console.log(`BMI Score: ${bmiScore}, Position: ${position}px`);
+            } else {
+                console.log(`No range found for BMI score: ${bmiScore}`);
             }
         });
     </script>
@@ -242,51 +251,14 @@
 
         <!-- BMI Range Section -->
         <div class="FrameBmiParameter"
-            style="width: 100%; max-width: 1362px; height: 736px; position: relative; margin: 0 auto; padding-top: 20px; margin-bottom: 80px;">
-            <!-- Background Container -->
-            <div class="Rectangle2"
-                style="width: 100%; height: 736px; position: absolute; background: #385723; border-radius: 30px; margin-top: 20px;">
-                <!-- Gradient Bar -->
-                <div class="gradient-bar"
-                    style="width: 265px; height: 580px; margin: 78px 172px; position: relative; background: linear-gradient(180deg, #7BABD3 0%, #57BC6E 20%, #EADF45 40%, #F5833D 60%, #F25E5E 80%, black 94%); border-radius: 10px;">
-                </div>
-
-                <!-- BMI Ranges -->
-                <div class="bmi-ranges"
-                    style="position: absolute; left: 172px; top: 78px; width: 265px; color: white; font-size: 32px; font-family: Poppins; font-weight: 500; text-align: center">
-                    <div style="margin-bottom: 44px">
-                        < 18.5</div>
-                            <div style="margin-bottom: 44px">18.5 - 24.9</div>
-                            <div style="margin-bottom: 44px">25 - 29.9</div>
-                            <div style="margin-bottom: 44px">30 - 34.9</div>
-                            <div style="margin-bottom: 44px">35 - 39.9</div>
-                            <div>>= 40</div>
-                    </div>
-
-                    <!-- BMI Categories -->
-                    <div class="bmi-categories"
-                        style="position: absolute; left: 479px; top: 78px; width: 450px; color: white; font-size: 36px; font-family: Poppins; font-weight: 500">
-                        <div style="margin-bottom: 44px">Berat Badan Kurang</div>
-                        <div style="margin-bottom: 44px">Berat Badan Normal</div>
-                        <div style="margin-bottom: 44px">Kelebihan Berat Badan</div>
-                        <div style="margin-bottom: 44px">Obesitas Kelas I</div>
-                        <div style="margin-bottom: 44px">Obesitas Kelas II</div>
-                        <div>Obesitas Kelas III</div>
-                    </div>
-
-                    <!-- Category Circle -->
-                    <div class="category-circle"
-                        style="position: absolute; right: 182px; top: 152px; width: 436px; height: 432px; background: #D4F3B7; border-radius: 50%; z-index: 1;">
-                        <div
-                            style="position: relative; top: 139px; text-align: center; color: black; font-size: 48px; font-family: Poppins; font-weight: 700">
-                            Kategori<br />BMI
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <x-footer />
+            style="width: 100%; max-width: 1362px; height: 736px; position: relative; margin: 0 auto; padding-top: 20px; margin-bottom: 80px; margin-top: 80px;">
+            <img src="{{ asset('images/indexbmi.svg') }}" alt="BMI Index Chart"
+                style="width: 100%; height: 100%; object-fit: contain;">
         </div>
+
+
+    </div>
+    <x-footer />
 </body>
 
 </html>

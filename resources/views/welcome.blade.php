@@ -127,14 +127,14 @@
                         <label class="mb-2 text-lg md:text-xl text-white">Gender</label>
                         <select name="gender" required
                             class="w-full bg-[#FEFAE0] rounded-lg p-3 md:p-4 text-sm md:text-base">
-                            <option value="" disabled {{ !Auth::user()->gender ? 'selected' : '' }}>Gender Kamu
+                            <option value="">Gender Kamu</option>
+                            <option value="male"
+                                {{ Auth::check() && Auth::user()->gender == 'male' ? 'selected' : '' }}>Laki-laki
                             </option>
-                            <option value="male" {{ Auth::user()->gender == 'male' ? 'selected' : '' }}>Laki-laki
-                            </option>
-                            <option value="female" {{ Auth::user()->gender == 'female' ? 'selected' : '' }}>Perempuan
+                            <option value="female"
+                                {{ Auth::check() && Auth::user()->gender == 'female' ? 'selected' : '' }}>Perempuan
                             </option>
                         </select>
-
 
                         @error('gender')
                             <span class="text-sm text-red-500">{{ $message }}</span>
